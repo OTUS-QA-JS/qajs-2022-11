@@ -23,9 +23,9 @@ export const fullTrim = (text) => (text || '').replace(/\s/g, '');
  * @example getTotal([{ price: 10, quantity: 10 }]) // 100
  * @example getTotal([{ price: 10, quantity: 1 }]) // 10
  * @example getTotal([{ price: 10, quantity: 1 }, { price: 10, quantity: 9 }]) // 100
- * @example getTotal([{ price: 10, quantity: 0 }, { price: 10, quantity: 9 }]) // 90
- * @example getTotal([{ price: 10, quantity: 10 }, 10]) // 90
- * @example getTotal([{ price: 10, quantity: 10 }, 100]) // 0
+ * @example getTotal([{ price: 10, quantity: 0 }], { price: 10, quantity: 9 }) // 90
+ * @example getTotal([{ price: 10, quantity: 10 }], 10) // 90
+ * @example getTotal([{ price: 10, quantity: 10 }], 100) // 0
  */
 export const getTotal = (items = [], discount = 0) => {
     if (typeof discount !== 'number') {
@@ -34,7 +34,7 @@ export const getTotal = (items = [], discount = 0) => {
     if (discount < 0) {
         throw new Error('Процент скидки не может быть отрицательным')
     }
-    const total = items.reduce((item, acc) => {
+    const total = items.reduce((acc, item, ) => {
         return acc + item.price * item.quantity;
     }, 0)
     return total - total * discount / 100;
