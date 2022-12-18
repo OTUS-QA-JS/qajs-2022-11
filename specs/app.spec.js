@@ -68,4 +68,13 @@ describe('Testing function getTotal', () => {
             getTotal([{price: 20, quantity: 10}], -1)
         }).toThrowError('Процент скидки не может быть отрицательным');
     });
+    test.each`
+    name         | price | quantity | discount | expected
+    ${'огурцы'}  | ${20} | ${5}     | ${10}    | ${90}
+    ${'яблоки'}  | ${50} | ${10}    | ${7}     | ${465}
+    ${'кабачки'} | ${40} | ${15}    | ${5}     | ${570}
+    ${'бананы'}  | ${8}  | ${50}    | ${0}     | ${400}
+    `('$name: $price * $quantity - $discount% = $expected', ({ name, price, quantity, discount, expected }) => {
+        expect(getTotal([{name: name, price: price, quantity: quantity}], discount)).toBe(expected);
+    })
 })
