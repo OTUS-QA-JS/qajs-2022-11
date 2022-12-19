@@ -7,7 +7,7 @@ import { nameIsValid, fullTrim, getTotal } from '../src/app.js'
 describe('App test 100% coverage', () => {
 
     test('To make sure that the name is invalid', () => {
-        expect(nameIsValid('Sergey Abramov')).toBe(false)
+        expect(nameIsValid('S')).toBe(false)
     });
     
     test('To make sure that the name is valid', () => {
