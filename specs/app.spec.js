@@ -1,8 +1,14 @@
 import { nameIsValid, fullTrim, getTotal } from '../src/app.js'
 
-/**
- * Для проверки, что jest настроен правильно. Можно удалить
- */
-test('adds 1 + 2 to equal 3', () => {
+test('discount is not a number', () => {
     expect(1 + 2).toBe(3);
 });
+/*test.toDo(function toBeWithinRange(discount) {
+    if (
+        typeof discount !== 'number'
+    ) {
+        throw new Error('These must be of type number!');
+    }
+    expect(toBeWithinRange).toThrow(Error);
+}
+);*/
