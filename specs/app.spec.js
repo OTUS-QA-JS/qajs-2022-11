@@ -71,7 +71,7 @@ describe('tests for function getTotal', () => {
         expect(() => getTotal([{ price: 10, quantity: 10 }], -10)).toThrow()
     })
 
-    describe('text trim', () => {
+    describe('The discount percentage cannot be negative', () => {
         describe('' , () => {
             [
                 { name: "Киндер",           price: 100,  quantity: 1,  discount: 10,  expected: 90},
