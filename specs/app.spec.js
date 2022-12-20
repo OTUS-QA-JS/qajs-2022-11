@@ -77,9 +77,16 @@ describe('tests for function getTotal', () => {
                 { name: "Молочный шоколад", price: 90,   quantity: 2,  discount: 20,  expected: 144},
                 { name: "Мороженое",        price: 70,   quantity: 10, discount: 0,   expected: 700},
                 { name: "Пельмени",         price: 60,   quantity: 1,  discount: 200, expected: -60},
+                { name: "Пельмени",         price: 60,   quantity: 1,  discount: -10, expected: 'error'},
             ].forEach(({name, price, quantity, discount, expected}) => {
                 test(`${name}  ${price} * ${quantity} - ${discount}% = ${expected}` ,() => {
+                    if (expected === 'error') {
+                        expect(function () {
+                            getTotal([{name: name, price: price, quantity: quantity }], discount);
+                        }).toThrow();
+                    } else {
                     expect(getTotal([{name: name, price: price, quantity: quantity}], discount)).toBe(expected)
+                    }
                 })
             })
     }) 
