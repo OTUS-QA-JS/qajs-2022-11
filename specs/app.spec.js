@@ -72,7 +72,6 @@ describe('tests for function getTotal', () => {
     })
 
     describe('The discount percentage cannot be negative', () => {
-        describe('' , () => {
             [
                 { name: "Киндер",           price: 100,  quantity: 1,  discount: 10,  expected: 90},
                 { name: "Молочный шоколад", price: 90,   quantity: 2,  discount: 20,  expected: 144},
@@ -83,6 +82,5 @@ describe('tests for function getTotal', () => {
                     expect(getTotal([{name: name, price: price, quantity: quantity}], discount)).toBe(expected)
                 })
             })
-        })
     }) 
 })
