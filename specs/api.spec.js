@@ -45,7 +45,7 @@ describe('Testing bookstore API', () => {
         }
     });
     test('create user successfully', async () => {
-        let randomString = Math.random().toString(36).slice(2, 7);
+        const randomString = Math.random().toString(36).slice(2, 7);
         const config ={
             method: "post",
             url: endpoints.createUserUrl,
