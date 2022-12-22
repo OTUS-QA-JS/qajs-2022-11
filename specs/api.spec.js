@@ -1,11 +1,16 @@
 import axios from "axios";
 import {jest} from "@jest/globals"; jest;
 
+const endpoints = {
+    createUserUrl: 'https://bookstore.demoqa.com/Account/v1/User',
+    generateTokenUrl: 'https://bookstore.demoqa.com/Account/v1/GenerateToken'
+}
+
 describe('Testing bookstore API', () => {
     test('create user with user exists error', async () => {
         const config ={
             method: "post",
-            url: 'https://bookstore.demoqa.com/Account/v1/User',
+            url: endpoints.createUserUrl,
             data: {
                 "userName": "aizhan",
                 "password": "Aizhan#123"
@@ -23,7 +28,7 @@ describe('Testing bookstore API', () => {
     test('create user with bad password error', async () => {
         const config ={
             method: "post",
-            url: 'https://bookstore.demoqa.com/Account/v1/User',
+            url: endpoints.createUserUrl,
             data: {
                 "userName": "aizhan1",
                 "password": "Aizhan123"
@@ -39,12 +44,13 @@ describe('Testing bookstore API', () => {
                 "Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.");
         }
     });
-    test.skip('create user successfully', async () => {
+    test('create user successfully', async () => {
+        let randomString = Math.random().toString(36).slice(2, 7);
         const config ={
             method: "post",
-            url: 'https://bookstore.demoqa.com/Account/v1/User',
+            url: endpoints.createUserUrl,
             data: {
-                "userName": "aizhan02", //зарандомизировать
+                "userName": randomString,
                 "password": "Aizhan#123"
             }
         }
@@ -55,7 +61,7 @@ describe('Testing bookstore API', () => {
     test('generate token with error', async () => {
         const config ={
             method: "post",
-            url: 'https://bookstore.demoqa.com/Account/v1/GenerateToken',
+            url: endpoints.generateTokenUrl,
         }
         try {
             const response = await axios(config);
@@ -69,7 +75,7 @@ describe('Testing bookstore API', () => {
     test('generate token with error', async () => {
         const config ={
             method: "post",
-            url: 'https://bookstore.demoqa.com/Account/v1/GenerateToken',
+            url: endpoints.generateTokenUrl,
             data: {
                 "userName": "aizhan",
                 "password": "Aizhan#123"
