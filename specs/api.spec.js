@@ -40,8 +40,7 @@ describe('Testing bookstore API', () => {
         catch (e) {
             expect(e.response.status).toEqual(400);
             expect(e.response.data.code).toEqual('1300');
-            expect(e.response.data.message).toEqual(
-                "Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.");
+            expect(e.response.data.message).toEqual("Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.");
         }
     });
     test('create user successfully', async () => {
