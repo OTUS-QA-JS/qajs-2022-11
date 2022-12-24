@@ -1,4 +1,4 @@
-import { nameIsValid, fullTrim, getTotal } from '../src/app.js'
+import {nameIsValid, fullTrim, getTotal, getScore} from '../src/app.js'
 
 describe('Testing function nameIsValid', () => {
     test('nameIsValid is defined', () => {
@@ -34,7 +34,7 @@ describe('Testing function fullTrim', () => {
     test('fullTrim replace white spaces', () => {
         expect(fullTrim('Строчка с пробелами')).toBe('Строчкаспробелами')
     });
-})
+});
 
 describe('Testing function getTotal', () => {
     test('getTotal is defined', () => {
@@ -76,5 +76,36 @@ describe('Testing function getTotal', () => {
     ${'бананы'}  | ${8}  | ${50}    | ${0}     | ${400}
     `('$name: $price * $quantity - $discount% = $expected', ({ name, price, quantity, discount, expected }) => {
         expect(getTotal([{name: name, price: price, quantity: quantity}], discount)).toBe(expected);
-    })
+    });
+});
+
+describe('Testing function getScore', () => {
+    test('all values of key in object are number', () => {
+        const testObj = {
+            Anna: 10,
+            Olga: 1,
+            Ivan: 5,
+        };
+        expect(getScore(testObj)).toEqual(16);
+    });
+    test('one value of key in object is string', () => {
+        const testObj = {
+            Anna: 10,
+            Olga: 1,
+            Ivan: '5',
+        };
+        expect(function () {
+            getScore(testObj)
+        }).toThrowError('Значения ключей объекта должны быть числом!');
+    });
+    test('all values of key in object are string', () => {
+        const testObj = {
+            Anna: 'ten',
+            Olga: 'sting value',
+            Ivan: '5',
+        };
+        expect(function () {
+            getScore(testObj)
+        }).toThrowError('Значения ключей объекта должны быть числом!');
+    });
 })
