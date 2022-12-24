@@ -39,3 +39,20 @@ export const getTotal = (items = [], discount = 0) => {
     }, 0)
     return total - total * discount / 100;
 }
+
+/**
+ * Принимает на вход объект, в котором значения ключей - числа и возвращает в ответ сумму всех чисел
+ *
+ * @param {Object} userScore
+ * @returns {number}
+ */
+export const getScore = (userScore) => {
+    let scoreSum = 0;
+    for (let key in userScore) {
+        if (typeof userScore[key] !== 'number') {
+            throw new Error('Значения ключей объекта должны быть числом!');
+        }
+        scoreSum += userScore[key];
+    }
+    return scoreSum;
+};
