@@ -35,11 +35,11 @@ describe('getTotal parametric test', () => {
   });
 
   const items = [
-    { items: [], expected: 0 },
-    { items: [{ price: 10, quantity: 10 }], discount: 10, expected: 100 },
-    { items: [{ price: 100, quantity: 10 }], discount: 10, expected: 1000 },
+    { items: [], discount: 10, expected: 0 },
+    { items: [{ price: 10, quantity: 10 }], discount: 10, expected: 90 },
+    { items: [{ price: 100, quantity: 10 }], discount: 10, expected: 900 },
   ];
-  it.each(items)(`getTotal($items)`, ({ items, expected }) => {
-    expect(getTotal(items)).toBe(expected);
+  it.each(items)(`getTotal($items)`, ({ items, discount, expected }) => {
+    expect(getTotal(items,discount)).toBe(expected);
   });
 });
