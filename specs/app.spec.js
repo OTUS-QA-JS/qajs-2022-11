@@ -31,13 +31,41 @@ describe('Tests for trim', () => {
         expect(fullTrim('Основа всего')).toBe('Основавсего');
 });
     it('correct work with special symbols', () => {
-        expect(fullTrim('Какой то очень \"большой\” текст')).toBe('Какойтоочень\"большой”текст');
+        expect(fullTrim("Какой то очень \"большой\" текст")).toBe("Какойтоочень\"большой\"текст");
 });
 
 describe('tests for GetTotal', () => {
-    test.each`
-    items     | discount  | expected
-    ${[1,2,3]}|  ${10}    | ${}
-    ${[1]}    |${'Десять'}| ${false}
-    `('exp'), ({})
+    let cases = [
+        [ [{ price: 10, quantity: 10 }], 0, 100 ],
+        [ [{ price: 10, quantity: 1 }], 0, 10 ],
+        [ [{ price: 10, quantity: 1 }, { price: 10, quantity: 9 }], 0, 100 ],
+        [ [{ price: 10, quantity: 10 }], 10, 90 ],
+        [ [{ price: 10, quantity: 10 }], 100, 0 ],
+        [ [{ price: 10, quantity: 10 }], 'Десять', 'Скидка должна быть числом' ],
+        [ [{ price: 10, quantity: 10 }], -10, 'Процент скидки не может быть отрицательным' ],
+        [ [{ price: 10, quantity: 10 }], 10, 90 ],
+        [ [{ price: 1001.1, name: 'Помада', quantity: 1 }], 0, 1001.1 ]
+    ];
+
+    test.each(cases)('getTotal(%o, %p)', (items, discount, expected) => {
+        if (typeof expected == 'string') {
+            expect(() => getTotal(items, discount)).toThrow(expected);
+        }
+        else {
+            expect(getTotal(items, discount)).toBe(expected);
+        }
+    });
+    // test.each`
+    // items     | discount    | expected
+    // ${[1]}    | ${'Десять'} | ${'error'}
+    // ${[1]}    | ${-10}      | ${'error'}
+    // ${[1]}    | ${10}       | ${10}
+    // `('exp', ({ items, discount, expected }) => {
+    //     console.log(items, discount, expected);
+    //     if (expected === 'error') {
+    //         expect(() =>  getTotal(items, discount)).toThrow();
+    // } else {
+    //     expect(getTotal(items, discount)).toBe(expected);
+    // }
+    // });
 });
