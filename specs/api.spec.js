@@ -4,26 +4,47 @@ import expect from "expect"; jest;
 
 describe("API tests", function(){
 
-
-    test('2. Создание пользователя c ошибкой, пароль не подходит', async() => {
+    test('1. Создание пользователя c ошибкой, логин уже используется.', async() => {
         const config = {
             method: 'POST',
-            url: 'https://dummyjson.com/users/add',
-            body: JSON.stringify({
-                firstName: 'sad',
-                lastName: 'Ovi',
-                age: 250
-            })
+            url: 'https://bookstore.demoqa.com/Account/v1/User',
+            data: {
+                "userName": "Dmitry.solodov",
+                "password": "few3@fWw123Qwe.q#"
+            }
         }
-        const resp = await axios(config);
-        expect(resp.status).toEqual(400);
-        console.log("User " + config.body.name + " (" + config.body.job + ")" +  " with id = " + resp.data.id + ' created at ' + resp.data.createdAt);
+        try {
+            const resp = await axios(config);
+            console.log("Пользователь " + resp.data.userName + " создан");
+        }
+        catch (e) {
+            console.log("Пользователь не создан по причине: " + e.response.statusText + " (" + e.response.status +  ")" + ": " + e.response.data.message);
+            expect(e.response.status).toEqual(406);
+            expect(e.response.statusText).toEqual("Not Acceptable");
+        }
     });
 
+    test('2. Создание пользователя c ошибкой, пароль не подходит.', async() => {
+        const config = {
+            method: 'POST',
+            url: 'https://bookstore.demoqa.com/Account/v1/User',
+            data: {
+                "userName": "Dmitry.solodov",
+                "password": "12345qwe"
+            }
+        }
+        try {
+            const resp = await axios(config);
+            console.log("Пользователь " + resp.data.userName + " создан");
+        }
+        catch (e) {
+            console.log("Пользователь не создан по причине: " + e.response.statusText + " (" + e.response.status +  ")" + ": " + e.response.data.message);
+            expect(e.response.status).toEqual(400);
+            expect(e.response.statusText).toEqual("Bad Request");
+        }
+    });
 
-
-
-    test.skip('3. Создание пользователя успешно', async() => {
+    test('3. Создание пользователя успешно.', async() => {
         const config = {
             method: 'POST',
             url: 'https://reqres.in/api/users',
@@ -37,7 +58,7 @@ describe("API tests", function(){
         console.log("User " + config.body.name + " (" + config.body.job + ")" +  " with id = " + resp.data.id + ' created at ' + resp.data.createdAt);
     });
 
-    test.skip('4. Генерация токена c ошибкой', async() => {
+    test('4. Генерация токена c ошибкой.', async() => {
         const config = {
             method: 'POST',
             url: "https://dummyjson.com/auth/login",
@@ -58,7 +79,7 @@ describe("API tests", function(){
         }
     });
 
-    test.skip('5. Генерация токена успешно', async() => {
+    test('5. Генерация токена успешно.', async() => {
         const config = {
             method: 'POST',
             url: "https://dummyjson.com/auth/login",
@@ -72,7 +93,4 @@ describe("API tests", function(){
         expect(resp.status).toEqual(200);
         console.log("Полученный токен для пользователя " + resp.data.username + ": " + resp.data.token);
     });
-
-
 });
-
