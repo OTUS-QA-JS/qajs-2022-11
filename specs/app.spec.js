@@ -43,15 +43,10 @@ describe('Order amount calculation', () => {
   test('Two order amount with discount', () => {
     expect(getTotal([{ price: 10, quantity: 9 }, { price: 10, quantity: 10 }], 10)).toBe(171);
   });
- /* test('Discount must be a number throws', () => {
-    if (expected === 'error') {
-      expect(getTotal([{ price: 10, quantity: 9 }], "1")).toThrow();
-    }
+  test('Discount must be a number', () => {
+    expect(() => getTotal([{ price: 10, quantity: 9 }], '12')).toThrowError(new Error('Скидка должна быть числом'));
   });
-  test('Discount percentage cannot be negative throws', () => {
-    if (expected === 'error') {
-      expect(getTotal([{ price: 10, quantity: 9 }], -2)).toThrow();
-    }
-  });     Не смог разобраться с ошибкой. Посмотрите что не так.
-          Выдает ошибку  ReferenceError: expected is not defined */
+  test('Discount percentage cannot be negative', () => {
+    expect(() => getTotal([{ price: 10, quantity: 9 }], -12)).toThrowError(new Error('Процент скидки не может быть отрицательным'));
+  });
 });
