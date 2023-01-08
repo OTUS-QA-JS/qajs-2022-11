@@ -38,4 +38,4 @@ export const getTotal = (items = [], discount = 0) => {
         return acc + item.price * item.quantity;
     }, 0)
     return total - total * discount / 100;
-}
+};
