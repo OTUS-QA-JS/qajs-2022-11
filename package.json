@@ -26,6 +26,6 @@
   },
   "description": "",
   "dependencies": {
-    "axios": "^1.2.1"
+    "axios": "^1.2.2"
   }
 }
