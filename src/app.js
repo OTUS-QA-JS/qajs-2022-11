@@ -4,7 +4,7 @@
  * @returns {boolean}
  */
 
-// export const nameIsValid = (name) => !!name && name.length >= 2 && !name.includes(' ');
+export const nameIsValid = (name) => !!name && name.length >= 2 && !name.includes(' ');
 
 /**
  * Удаление пробелов из строки
@@ -13,7 +13,7 @@
  * @returns {string}
  */
 
-// export const fullTrim = (text) => (text || '').replace(/\s/g, '');
+export const fullTrim = (text) => (text || '').replace(/\s/g, '');
 
 /**
  * Подсчёт суммы заказа
@@ -27,18 +27,18 @@
  * @example getTotal([{ price: 10, quantity: 10 }], 10) // 90
  * @example getTotal([{ price: 10, quantity: 10 }], 100) // 0
  */
-// export const getTotal = (items = [], discount = 0) => {
-//     if (typeof discount !== 'number') {
-//         throw new Error('Скидка должна быть числом')
-//     }
-//     if (discount < 0) {
-//         throw new Error('Процент скидки не может быть отрицательным')
-//     }
-//     const total = items.reduce((acc, item, ) => {
-//         return acc + item.price * item.quantity;
-//     }, 0)
-//     return total - total * discount / 100;
-// }
+export const getTotal = (items = [], discount = 0) => {
+    if (typeof discount !== 'number') {
+        throw new Error('Скидка должна быть числом')
+    }
+    if (discount < 0) {
+        throw new Error('Процент скидки не может быть отрицательным')
+    }
+    const total = items.reduce((acc, item, ) => {
+        return acc + item.price * item.quantity;
+    }, 0)
+    return total - total * discount / 100;
+}
 
 
 // Lesson 6 - Homework
