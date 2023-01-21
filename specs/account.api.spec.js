@@ -4,19 +4,13 @@ import getNewUser from "../framework/fixtures/createNewUser";
 
 
 describe('Регистрация пользователя, POST "/Account/v1/User"',() => {
-    it.only('Успешное создание пользователя', async () =>{
-        // const resp = await account.createUser();
-        // let req = JSON.parse(resp.config.data);
-        // userId = account.getUserId(resp)
 
-        // expect(resp.status).toEqual(201)
-        // expect(resp.data.username).toEqual(req.userName)
+    it('Успешное создание пользователя', async () =>{
         const resp = await account.createUser(getNewUser());
         let req = JSON.parse(resp.config.data);
         expect(resp.status).toEqual(201)
         expect(resp.data.username).toEqual(req.userName)
         await account.cleanUser(resp)
-        // console.log(account.getAuthToken(resp));
     })
 
     it('Ошибка при создании пользователя с неправильным паролем', async () =>{
@@ -44,13 +38,14 @@ describe('Регистрация пользователя, POST "/Account/v1/Use
 })
 
 describe ('Получение токена, POST "Account/v1/GenerateToken"', () => {
-    it('Успешное получение токена', async () =>{
-        const regData = getNewUser();
-        await account.createUser(regData);
-        const resp = await account.authorization(regData)
-        expect(resp.status).toEqual(200)
-        expect(resp.data.result).toEqual("User authorized successfully.")
 
+    it('Успешное получение токена', async () =>{
+        const regData = getNewUser()
+        const resp = await account.createUser(regData);
+        const respAuth = await account.authorization(regData)
+        expect(respAuth.status).toEqual(200)
+        expect(respAuth.data.result).toEqual("User authorized successfully.")
+        await account.cleanUser(resp)
     })
 
     it('Ошибка при генерации токена с несуществующим пользователем', async () =>{
@@ -64,20 +59,18 @@ describe ('Получение токена, POST "Account/v1/GenerateToken"', ()
 })
 
 describe ('Удаление пользователя, DELETE "/Account/v1/User', () => {
+
     it('Успешное удаление пользователя', async () => {
-        const regData = getNewUser();
-        const resp = await account.createUser(regData);
-        const userId = resp.data.userID;
-        const respToken = await account.authorization(regData);
-        const token = respToken.data.token;
+        const resp = await account.createUser(getNewUser());
+        const token = (await account.getUserData(resp)).authToken;
+        const userId = (await account.getUserData(resp)).userID;
         const respDel = await account.deleteUser(token, userId);
         expect(respDel.status).toEqual(204)
     })
 
     it('Нельзя удалить пользователя без токена авторизации', async () => {
-        const regData = getNewUser();
-        const resp = await account.createUser(regData);
-        const userId = resp.data.userID;
+        const resp = await account.createUser(getNewUser());
+        const userId = (await account.getUserData(resp)).userID;
         const token = ''
         try{
         await account.deleteUser(token, userId);
@@ -86,14 +79,13 @@ describe ('Удаление пользователя, DELETE "/Account/v1/User',
             expect(err.response.status).toEqual(401)
             expect(err.response.data).toEqual({"code": "1200", "message": "User not authorized!"})
         }
+        await account.cleanUser(resp)
     })
 
     it('Ошибка при удалении без userId', async() => {
-        const regData = getNewUser();
-        await account.createUser(regData);
+        const resp = await account.createUser(getNewUser());
         const userId = ''
-        const respToken = await account.authorization(regData);
-        const token = respToken.data.token;
+        const token = (await account.getUserData(resp)).authToken;
         try{
             await account.deleteUser(token, userId);
         }
@@ -101,24 +93,23 @@ describe ('Удаление пользователя, DELETE "/Account/v1/User',
             expect(err.response.status).toEqual(200)
             expect(err.response.status).toEqual({ "code": "1207", "message": "User Id not correct!" })
         }
+        await account.cleanUser(resp)
     })
 })
-
 describe('Получение информации о пользователе, GET "/Account/v1/User', () => {
     it('Успешное получение информации о пользователе', async () => {
-        const regData = getNewUser();
-        const resp = await account.createUser(regData);
-        const userId = resp.data.userID;
-        const respToken = await account.authorization(regData);
-        const token = respToken.data.token;
+        const resp = await account.createUser(getNewUser());
+        const token = (await account.getUserData(resp)).authToken;
+        const userId = (await account.getUserData(resp)).userID;
         const respGet = await account.getUserInfo(token, userId);
         expect(respGet.status).toEqual(200);
         expect(respGet.data.userId).toEqual(userId)
-    }),
+        await account.cleanUser(resp)
+    })
+
     it('Нельзя получить информацю о пользователе без токена авторизации', async () => {
-        const regData = getNewUser();
-        const resp = await account.createUser(regData);
-        const userId = resp.data.userID;
+        const resp = await account.createUser(getNewUser());
+        const userId = (await account.getUserData(resp)).userID;
         const token = ''
         try{
         await account.getUserInfo(token, userId);
@@ -127,13 +118,13 @@ describe('Получение информации о пользователе, G
             expect(err.response.status).toEqual(401)
             expect(err.response.data).toEqual({"code": "1200", "message": "User not authorized!"})
         }
-    }),
+        await account.cleanUser(resp)
+    })
+
     it('Ошибка при запросе информации без userId', async() => {
-        const regData = getNewUser();
-        await account.createUser(regData);
-        const userId = ''
-        const respToken = await account.authorization(regData);
-        const token = respToken.data.token;
+        const resp = await account.createUser(getNewUser());
+        const token = (await account.getUserData(resp)).authToken;
+        const userId = '';
         try{
             await account.getUserInfo(token, userId);
         }
@@ -141,5 +132,7 @@ describe('Получение информации о пользователе, G
             expect(err.response.status).toEqual(200)
             expect(err.response.status).toEqual({ "code": "1207", "message": "User not found!" })
         }
+
+        await account.cleanUser(resp)
     })
 })
