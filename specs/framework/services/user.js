@@ -42,7 +42,20 @@ const account = {
     async getAuthToken(payload) {
         const res = await this.generateToken(payload);
         return res.body.token;
-    }
+    },
+
+    /**
+    * Function creates test user and returns his uuid and auth token. 
+    * @param {Object} credentials - The object that keeps user credentials.
+    * @returns {Object} userData - The object that keeps user uuid and token.
+    */
+    async createUserWithToken(credentials) {
+        const userId = (await account.user(credentials)).body.userID;
+        const authToken = await account.getAuthToken(credentials);
+        const userData = { uuid: userId, token: authToken };
+        console.log(userData);
+        return userData;
+    },
 }
 
 export default account

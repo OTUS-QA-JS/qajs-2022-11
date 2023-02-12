@@ -1,7 +1,7 @@
 import config from "./framework/config";
 import account from "./framework/services/user";
 
-describe("bookstore API tests", () => {
+describe("bookstore user API tests", () => {
   const { credentials } = config;
   let user = {};
   let token = '';
@@ -106,7 +106,6 @@ describe("bookstore API tests", () => {
   it(`DELETE /account/v1/user/{uuid} - Delete user, valid credentials(200)`, async () => {
     const res = await account.deleteUser(user.userID, token);
     expect(res.status).toEqual(204);
-    console.log(res.body);
   });
 
   it("POST /account/v1/authorized - Auth user, user doesn't exists(404)", async () => {
