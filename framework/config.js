@@ -2,7 +2,7 @@ const config = {
     // Base url
     url: "https://bookstore.demoqa.com",
     credentials: {
-        userName: "Dimitrо_2",
+        userName: "Dimitrо_84",
         password: "123qWe!@#s983"
     }
 }
