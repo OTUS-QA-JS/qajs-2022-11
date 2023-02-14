@@ -39,3 +39,24 @@ export const getTotal = (items = [], discount = 0) => {
     }, 0)
     return total - total * discount / 100;
 }
+
+/**
+ * Расчет суммы всех оценок.
+ * 
+ * @param {Object} scores -  объект, содержащий имя и оценки.
+ * @param {string} scores.key - имя студента.
+ * @param {number} scores.value - оценка студента.
+ * @return {number} сумма всех оценок.
+ * @throws {TypeError} когда ввод не является объектом.
+ */
+function getScore(scores) {
+    let sum = 0;
+    if (typeof scores !== 'object') {
+      throw new TypeError('Входные данные должны быть объектом');
+    }
+    for (const key in scores) {
+      sum += scores[key];
+    }
+    return sum;
+  }
+  
