@@ -28,7 +28,7 @@ jobs:
         cache: 'npm'
 
     - name: Install dependents
-        run: npm ci
+      run: npm ci
 
     - name: Run tests
       run: npm run test:coverage
