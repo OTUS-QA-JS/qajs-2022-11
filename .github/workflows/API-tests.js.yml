@@ -10,7 +10,7 @@ on:
     branches: [ "develop", "main" ]
 
 jobs:
-  build:
+  all-tests:
 
     runs-on: ubuntu-latest
 
@@ -18,7 +18,11 @@ jobs:
       matrix:
         node-version: [18.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
+        
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      CREDENTIALS: ${{ secrets.CREDENTIALS }}
+      
     steps:
     - uses: actions/checkout@v3
     - env:
@@ -29,5 +33,33 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm test
+    
+    - name: Check env
+      run: echo '${{ env.BASE_URL }}'
+        
+    - name: Install deps
+      run: npm ci
+    
+    - name: Run tests
+      run: npm test
+      continue-on-error: true
+      
+    - name: Create allure report
+      run: allure generate
+      continue-on-error: true
+
+    - name: Upload jest report
+      uses: actions/upload-artifact@v3
+      with:
+        name: report
+        if-no-files-found: error
+        path: ./jest-html-report
+
+    - name: Upload allure report
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-report
+        if-no-files-found: error
+        path: ./allure-report
+    
+

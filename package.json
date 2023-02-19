@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest",
     "report": "allure serve",
-    "clean": "rm -rf coverage/ allure-results/ allure-report/"
+    "clean": "rm -rf coverage/ allure-results/ allure-report/ jest-html-report/"
   },
   "repository": {
     "type": "git",
@@ -35,6 +35,7 @@
   "dependencies": {
     "allure-commandline": "^2.21.0",
     "jasmine-allure-reporter": "^1.0.2",
-    "jest-jasmine2": "^29.4.2"
+    "jest-jasmine2": "^29.4.2",
+    "jest-html-reporters": "^3.0.12"
   }
 }
