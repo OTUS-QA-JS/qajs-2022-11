@@ -86,7 +86,7 @@ jobs:
 
           Repository: ${{ github.repository }}
 
-          Results:  https://github.com/${{ github.repository }}/actions/runs/${{ github.action }}
+          Results:  https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
           See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
