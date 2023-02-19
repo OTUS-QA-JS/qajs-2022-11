@@ -43,7 +43,7 @@ jobs:
       continue-on-error: true
       
     - name: Create allure report
-      run: npm run report allure generate
+      run: npm run report
       continue-on-error: true
 
     - name: Upload jest report
