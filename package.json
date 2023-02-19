@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
-    "report": "allure serve",
+    "report": "allure serve && allure generate",
     "clean": "rm -rf coverage/ allure-results/ allure-report/ jest-html-report/"
   },
   "repository": {

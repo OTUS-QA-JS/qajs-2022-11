@@ -43,7 +43,7 @@ jobs:
       continue-on-error: true
       
     - name: Create allure report
-      run: allure generate
+      run: npm run report allure generate
       continue-on-error: true
 
     - name: Upload jest report
@@ -52,6 +52,8 @@ jobs:
         name: report
         if-no-files-found: error
         path: ./jest-html-report
+      continue-on-error: true
+
 
     - name: Upload allure report
       uses: actions/upload-artifact@v3
@@ -59,5 +61,6 @@ jobs:
         name: allure-report
         if-no-files-found: error
         path: ./allure-report
-    
+      continue-on-error: true
+
 
