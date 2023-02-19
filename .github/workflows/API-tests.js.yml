@@ -31,16 +31,20 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    
-    - name: Check env
-      run: echo '${{ env.BASE_URL }}'
         
     - name: Install deps
       run: npm ci
     
     - name: Run tests
-      run: npm test
+      run: npm run test:coverage
       continue-on-error: true
+
+    - name: Upload coverage
+      uses: actions/upload-artifact@v3
+      with: 
+        name: coverage
+        if-no-files-found: error
+        path: ./coverage
       
     - name: Create allure report
       run: npm run report
@@ -62,5 +66,25 @@ jobs:
         if-no-files-found: error
         path: ./allure-report
       continue-on-error: true
+
+    # - name: Deploy
+    #   uses: JamesIves/github-pages-deploy-action@v4
+    #   with:
+    #     folder: jest-html-report
+    #     clean: true
+    #     token: ${{ secrets.TOKEN }}
+
+    - name: Send telegram notification
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.actor }} created commit:
+          Commit message: ${{ github.event.commits[0].message }}
+
+          Repository: ${{ github.repository }}
+
+          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
 
