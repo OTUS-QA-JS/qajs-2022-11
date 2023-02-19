@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage --collectCoverageFrom='./src/**'",
     "report": "allure generate --clean",
     "clean": "rm -rf coverage/ allure-results/ allure-report/ jest-html-report/"
   },
