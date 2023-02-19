@@ -1,6 +1,6 @@
 function createBooksCollection(books) {
-    return books.map(function (value) {
-        return { isbn: value };
+    return books.map(function (book) {
+        return { isbn: book.isbn };
     });
 };
 

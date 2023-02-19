@@ -53,7 +53,7 @@ const account = {
         const userId = (await account.user(credentials)).body.userID;
         const authToken = await account.getAuthToken(credentials);
         const userData = { uuid: userId, token: authToken };
-        console.log(userData);
+        console.log({ ...credentials, ...userData });  // object.assign через spread-оператор(это ...)
         return userData;
     },
 }

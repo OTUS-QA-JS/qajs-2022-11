@@ -1,3 +1,6 @@
 node_modules
 coverage
 .idea
+.env
+allure-results
+allure-report
