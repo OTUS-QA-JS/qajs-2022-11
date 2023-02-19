@@ -79,12 +79,15 @@ jobs:
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          ${{ github.actor }} created commit:
-          Commit message: ${{ github.event.commits[0].message }}
+        message_file: ./allure-report/index.html
+        format: html
+        # message: |
+        #   ${{ github.actor }} created commit:
+        #   Commit message: ${{ github.event.commits[0].message }}
 
-          Repository: ${{ github.repository }}
+        #   Repository: ${{ github.repository }}
+        #   Results: 
 
-          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+        #   See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
 
