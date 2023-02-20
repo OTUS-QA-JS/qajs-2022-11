@@ -11,7 +11,7 @@ beforeEach(async () => {
     .severity(Severity.Blocker);
 });
 
-describe.skip("POST /account/v1/user", () => {
+describe("POST /account/v1/user", () => {
   beforeEach(async () => {
     reporter.feature('New user registration')
   });

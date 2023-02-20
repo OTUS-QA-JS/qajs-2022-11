@@ -21,8 +21,9 @@ jobs:
         
     env:
       BASE_URL: ${{ secrets.BASE_URL }}
-      CREDENTIALS: ${{ secrets.CREDENTIALS }}
-      
+      TEST_LOGIN: ${{ secrets.TEST_LOGIN }}
+      TEST_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+
     steps:
     - uses: actions/checkout@v3
 
