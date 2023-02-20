@@ -3,13 +3,8 @@ export default {
     "transform": {
         "^.+\\.[t|j]sx?$": "babel-jest"
     },
-    reporters: ['default', [
-        "jest-html-reporters", {
-            "publicPath": "./jest-html-report",
-            "filename": "index.html",
-            "openReport": true
-        }
-    ], [
+    reporters: ['default', "jest-junit",
+        [
             "jest-allure", {
                 "publicPath": "./allure-report"
             }

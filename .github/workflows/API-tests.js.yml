@@ -37,28 +37,30 @@ jobs:
       run: npm ci
     
     - name: Run tests
-      run: npm run test:coverage
+      run: npm run test
       continue-on-error: true
 
-    - name: Upload coverage
-      uses: actions/upload-artifact@v3
-      with: 
-        name: coverage
-        if-no-files-found: error
-        path: ./coverage
-      
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: success() || failure()    # run this step even if previous step failed
+      with:
+        name: test-results
+        path: junit-reports/jest-*.xml    # Path to test results
+        reporter: jest-junit        # Format of test results
+      continue-on-error: true
+
+    # - name: Upload jest report
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: report
+    #     if-no-files-found: error
+    #     path: ./jest-html-report
+    #   continue-on-error: true
+
     - name: Create allure report
       run: npm run report
       continue-on-error: true
-
-    - name: Upload jest report
-      uses: actions/upload-artifact@v3
-      with:
-        name: report
-        if-no-files-found: error
-        path: ./jest-html-report
-      continue-on-error: true
-
+    
 
     - name: Upload allure report
       uses: actions/upload-artifact@v3
@@ -74,6 +76,8 @@ jobs:
         folder: jest-html-report
         clean: true
         token: ${{ secrets.TOKEN }}
+      continue-on-error: true
+
 
     - name: Send telegram notification
       uses: appleboy/telegram-action@master
@@ -83,11 +87,11 @@ jobs:
         message: |
           ${{ github.actor }} created commit:
           Commit message: ${{ github.event.commits[0].message }}
-
           Repository: ${{ github.repository }}
+          Commit: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          Run:  https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-          Results:  https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          Jest HTML report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          Check allure test report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+      continue-on-error: true
 
 

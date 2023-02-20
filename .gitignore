@@ -5,3 +5,4 @@ coverage
 allure-results
 allure-report
 jest-html-report
+junit-reports
