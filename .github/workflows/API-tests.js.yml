@@ -87,7 +87,7 @@ jobs:
           Repository: ${{ github.repository }}
 
           Results:  https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
+          Jest HTML report: https://${{ github.repository_owner }}.github.io/${{ github.repository }}/
           See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
 
