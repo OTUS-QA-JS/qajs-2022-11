@@ -10,7 +10,7 @@ Install all dependencies:
 ```bash
 npm install
 ```
-add .env file to the root folder and define environmental variables inside:
+Add .env file to the root folder and define environmental variables inside:
 ```bash
 BASE_URL = 'https://bookstore.demoqa.com'
 CREDENTIALS = '{
