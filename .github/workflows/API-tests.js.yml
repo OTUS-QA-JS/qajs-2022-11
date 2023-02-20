@@ -45,9 +45,11 @@ jobs:
       if: success() || failure()    # run this step even if previous step failed
       with:
         name: test-results
+        only-summary: 'true'
         path: junit-reports/jest-*.xml    # Path to test results
         reporter: jest-junit        # Format of test results
       continue-on-error: true
+      # token: ${{ secrets.TOKEN }}
 
     # - name: Upload jest report
     #   uses: actions/upload-artifact@v3
@@ -73,7 +75,7 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: jest-html-report
+        folder: allure-report
         clean: true
         token: ${{ secrets.TOKEN }}
       continue-on-error: true
