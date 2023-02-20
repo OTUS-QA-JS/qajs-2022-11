@@ -67,19 +67,18 @@ jobs:
         path: ./allure-report
       continue-on-error: true
 
-    # - name: Deploy
-    #   uses: JamesIves/github-pages-deploy-action@v4
-    #   with:
-    #     folder: jest-html-report
-    #     clean: true
-    #     token: ${{ secrets.TOKEN }}
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: jest-html-report
+        clean: true
+        token: ${{ secrets.TOKEN }}
 
     - name: Send telegram notification
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        # message_file: ./allure-report/index.html
         message: |
           ${{ github.actor }} created commit:
           Commit message: ${{ github.event.commits[0].message }}
