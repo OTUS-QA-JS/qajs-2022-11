@@ -39,4 +39,4 @@ jobs:
       with:
         name: report
         if-no-files-found: error
-        path: ../../jest-html-report
+        path: ./jest-html-report
