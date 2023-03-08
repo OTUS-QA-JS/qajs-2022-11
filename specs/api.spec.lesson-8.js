@@ -1,5 +1,5 @@
 import {test} from "@jest/globals";
-import config from "../framework/config";
+import config from "../framework/config-lesson-8";
 import user from "../framework/user";
 import book from "../framework/book";
 import expect from "expect";
@@ -118,6 +118,16 @@ describe('Удаление привязки книги к пользовател
 
         console.log('Статус ответа Удаления книги: код ' + resBookDelete.status);
         expect(resBookDelete.status).toEqual(204);
+    })
+
+});
+
+describe('Удаление пользователя.', () => {
+
+    test('DELETE – /Account/v1/User/{UUID} – Удаление существующего пользователя.', async () => {
+        const resDelete = await user.delete(uuid, token);
+        expect(resDelete.status).toEqual(204);
+        console.log('Статус запроса на удаление = ' + resDelete.status);
     })
 
 });
