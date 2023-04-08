@@ -1,14 +1,12 @@
-import config from "../user/config.js";
-
+import config from "../config.js";
 import supertest from "supertest";
+import * as trelloController from "../helper/boardsContr.js"
 
 let trello = supertest(config.url);
 
 describe('GET boards', () => {
     test('Метод должен существовать', async () => {
-        const res = await supertest(config.url)
-            .get('/1/members/me/boards')
-            .send(config.creds);
+        const res = await trelloController.getBoards(config.creds)
 
         expect(res.statusCode).not.toEqual(404);
     }),
@@ -23,25 +21,19 @@ describe('GET boards', () => {
       }),
 
     test('Проверка досок у юзера', async () => {
-        const res = await supertest(config.url)
-        .get('/1/members/me/boards')
-        .send(config.creds);
+        const res = await trelloController.getBoards(config.creds)
 
         expect(res.body.length).not.toEqual(0);
     }),
 
     test('В объекте возвращается доска с названием FOR OTUS', async () => {
-        const res = await supertest(config.url)
-        .get('/1/members/me/boards')
-        .send(config.creds);
+        const res = await trelloController.getBoards(config.creds)
 
         expect(res.body[0].name).toEqual('FOR OTUS');
     })
 
     test('В объекте не возвращаются несуществующие урлы', async() => {
-        const res = await supertest(config.url)
-        .get('/1/members/me/boards')
-        .send(config.creds);
+        const res = await trelloController.getBoards(config.creds)
 
         expect(res.body[0].url).not.toEqual('https://trello.com/b/xZcfugabuga/for-otus');
     })
