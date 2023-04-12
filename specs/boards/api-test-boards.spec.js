@@ -2,9 +2,9 @@ import config from "../config.js";
 import supertest from "supertest";
 import * as trelloController from "../helper/boardsContr.js"
 
-let trello = supertest(config.url);
 
-describe('GET boards', () => {
+
+describe('API boards', () => {
     test('Метод должен существовать', async () => {
         const res = await trelloController.getBoards(config.creds)
 
@@ -18,7 +18,7 @@ describe('GET boards', () => {
             .send({key: '25c3743b55c428cbc7684ebb469d9c12', token: 'demo3'})
 
         expect(res.status).toEqual(401);
-      }),
+    }),
 
     test('Проверка досок у юзера', async () => {
         const res = await trelloController.getBoards(config.creds)
