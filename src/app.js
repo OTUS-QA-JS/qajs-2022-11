@@ -39,3 +39,4 @@ export const getTotal = (items = [], discount = 0) => {
     }, 0)
     return total - total * discount / 100;
 }
+
