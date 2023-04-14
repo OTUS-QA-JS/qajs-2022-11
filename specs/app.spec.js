@@ -1,5 +1,5 @@
 import { nameIsValid, fullTrim, getTotal } from '../src/app.js'
-
+//домашнее задание
 describe('nameIsValid', () => {
     test('it loads without error', () => {
         expect(nameIsValid).toBeDefined();
