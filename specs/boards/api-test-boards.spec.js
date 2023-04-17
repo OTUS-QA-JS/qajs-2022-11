@@ -11,6 +11,12 @@ describe('API boards', () => {
         expect(res.statusCode).not.toEqual(404);
     }),
 
+    test('Метод должен существовать', async () => {
+        const res = await trelloController.getBoards(config.creds)
+
+        expect(res.statusCode).not.toEqual(404);
+    }),
+
     test('Cтатус с кодом ошибки если токен неверный', async () => {
         const res = await supertest(config.url)
             .get('/1/members/me/boards')
