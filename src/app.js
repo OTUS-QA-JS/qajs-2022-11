@@ -18,7 +18,7 @@ export const fullTrim = (text) => (text || '').replace(/\s/g, '');
 /**
  * Подсчёт суммы заказа
  *
- * @param {[{quantity: number, name?: string, price: number}]} items
+ * @param {[{quantity: number, name: string, price: number}]} items
  * @param {number} discount
  * @example getTotal([{ price: 10, quantity: 10 }]) // 100
  * @example getTotal([{ price: 10, quantity: 1 }]) // 10
