@@ -29,36 +29,26 @@ describe('function fullTrim coverage', () => {
         expect(() => fullTrim(1)).toThrow();
     });
 })
+ 
 
 
-/* 
 describe('function getTotal parametric coverage', () => {
-    test.each`
-    price   | quantity      | result
-    ${10}   | ${10}         |   ${100}
-    ${10}   | ${1}          |   ${10}
-    ${10}   | ${0}          |   ${0}
-    ${0}    | ${10}          |   ${0}
-    ${10}   | ${10}         |   ${100}
-    ${-1}   | ${10}         |   ${10}
-    ${-1}   | ${-1}         |   ${1}
-    ${10}   | ${10}         |   ${'error'}
-    ${'?'}   | ${-1}        |   ${'error'}
-    ${100}   | ${'?'}       |   ${'error'}
-    `('$function $quantity $result', ({price, quantity, result}) => {
-        if(result === 'error') {
-            expect(() => getTotal(price, '*', quantity)).toThrow
-        } else {
-            expect('amount of order', () => {
-                expect(getTotal(price, '*', quantity)).toBe(result)
-            })
-        }
-    })
-    
+test.each([
+    {item:[{ price: 10, quantity: 10 }],  discount: 0, expected: 100},
+    {item: [{ price: 10, quantity: 1 }],  discount: 0, expected: 10},
+    {item: [{ price: 10, quantity: 1 }, { price: 10, quantity: 9 }],  discount: 0, expected: 100},
+    {item: [{ price: 10, quantity: 0 }, { price: 10, quantity: 9 }],  discount: 0, expected: 90},
+    {item:[{ price: 10, quantity: 10 }],  discount: 10, expected: 90},
+    {item:[{ price: 10, quantity: 10 }],  discount: 100, expected: 0},
+    {item:[{ price: 'ten', quantity: 0 }],  discount: 10, expected: 'error'}, // тут действительно ошибка функции
+    {item:[{ price: 10, quantity: -1 }],  discount: 0, expected: 'error'},     // тут действительно ошибка функции
+    {item:[{ price: 10, quantity: 10 }],  discount: '100', expected: 'error'},
+    {item:[{ price: 10, quantity: 10 }],  discount: 'blabla', expected: 'error'},
+])('function getTotal parametric coverage', ({item, discount, expected}) => {
+    if(expected === 'error') {
+        expect(() => getTotal(item, discount, expected)).toThrow();
+    } else {
+        expect(getTotal(item, discount, expected)).toBe(expected);
+    }
 })
-// После написания теста выше, я понял что он вообще не работает
-// и не проверяет работу getTotal впринципе.
-// Вижу что items это массив с объектом и его параметрами, но как его
-// разложить по параметрам, а потом это вызвать я понятия не имею.
-// 
- */
+})
