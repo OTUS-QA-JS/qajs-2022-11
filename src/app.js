@@ -38,5 +38,18 @@ export const getTotal = (items = [], discount = 0) => {
         return acc + item.price * item.quantity;
     }, 0)
     return total - total * discount / 100;
-}
+};
 
+/**
+ * Подсчет суммы всех балов
+ *
+ * @param {name: number} text
+ * @returns {number}
+ */
+const getScore = (scores) => {
+    let sum = 0;
+    for(let grade of Object.values(scores)) {
+        sum += grade;
+    }
+    return console.log(sum);
+};
