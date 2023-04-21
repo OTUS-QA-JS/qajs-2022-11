@@ -1,4 +1,4 @@
-import { nameIsValid, fullTrim, getTotal } from '../src/app.js'
+import { nameIsValid, fullTrim, getTotal, getScore } from '../src/app.js'
 
 describe('nameIsValid tests', () => {
     test('nameIsValid - it loads without error', () => {
@@ -62,5 +62,13 @@ describe('parametric test', () => {
     ${[{price:10, quantity: 1}, {price: 20, quantity: 2}]}    | ${100}   | ${0}
     `('$items $discount = $expected' , ({items, discount, expected}) => {
          expect(getTotal(items, discount)).toBe(expected);
+    });
+});
+
+describe('getScore tests', () => {
+    test('getScore is valid', () => {
+    expect(getScore).toBeDefined();
+    expect(typeof getScore).toBe('function');
+    expect(getScore({'Ale': 10, 'Olga': 8})).toBe(18);
     });
 });

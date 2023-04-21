@@ -46,10 +46,10 @@ export const getTotal = (items = [], discount = 0) => {
  * @param {name: number} text
  * @returns {number}
  */
-const getScore = (scores) => {
+export const getScore = (scores) => {
     let sum = 0;
     for(let grade of Object.values(scores)) {
         sum += grade;
     }
-    return console.log(sum);
+    return sum;
 };
