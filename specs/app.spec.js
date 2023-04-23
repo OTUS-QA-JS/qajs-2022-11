@@ -9,22 +9,26 @@ test('is function', () => {
 test('nameIsValid :пустое значение == false', () => {
     expect(nameIsValid(null)).toBe(false)
 })
+
 test('nameIsValid : больше двух символов = true', () => {
     expect(nameIsValid('nikita')).toBe(true)
 })
-test('string', () => {
-    expect(fullTrim).toBeDefined()
-})
+
+
+
+
 test('number', () => {
     expect(fullTrim).toBeDefined()
 })
-test('писька сасать', () => {
+test('проверка ошибки при написании без пробела', () => {
     expect(fullTrim('писькасасать')).toBeDefined()
 })
 
-test('писькасасать', () => {
+test('проверка удаление пробела из строки', () => {
     expect(fullTrim('писька сасать')).toBe('писькасасать')
 })
+
+
 test('discount !== string', () => {
     expect(getTotal).toBeDefined()
 })
