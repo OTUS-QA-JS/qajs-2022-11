@@ -5,7 +5,7 @@ const scores = {
     Ivan: 555,
     foo: 'rtg',
     boolean: 'true',
-    //bar: asdfasdf  // bed data's example, but i can't use it, because it ruins with message 'asdfasdf is not defined'
+    //bar: asdfasdf  // bad data's example, but i can't use it, because it ruins with message 'asdfasdf is not defined'
     };
 
 
