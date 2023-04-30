@@ -11,10 +11,10 @@ const userWithWrongPass = {
 };
 
 const existUser = {
-    userName: "Maksim",
-    password: "k!Skdk12ksdksk"
+    userName: "NewUSer",
+    password: "k!NewUSer!10002"
 };
 
-const userId = "Maksim";
+const userId = "8bb34e98-9496-4ddb-820c-7d573633ffd5";
 
 export {newUser, userWithWrongPass, existUser, userId};
