@@ -1,34 +1,9 @@
-
-const existUser = {
-    userName: "Maksim",
-    password: "k!Skdk12ksdksk"
-};
-
-const userWithWrongPass = {
-    userName: "RandomUser",
-    password: "1234password"
-};
-
-//генерирует случайные строки для нового пользователя
-let r = (Math.random() + 1).toString(36).substring(7);
-
-const newUser = {
-    userName: `User${r}`,
-    password: `1P345!${r}`
-};
-
+import {baseURL, option0, option1, option2, option3} from "../framework/config";
+import { userId } from "../framework/fixtures";
 
 describe('Bookstore tests', () => {
     test('сreating a user with an error, the login is already in use', async () => {
-        const response = await fetch('https://bookstore.demoqa.com/Account/v1/User',
-        {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(existUser)
-        });
+        const response = await fetch(baseURL, option0);
         const data = await response.json();
         console.log(data);
         expect(data.code).toEqual('1204');
@@ -36,15 +11,7 @@ describe('Bookstore tests', () => {
     });
 
     test('сreate user with error, password does not match', async () => {
-        const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', 
-        {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userWithWrongPass)
-        });
+        const response = await fetch(baseURL, option1);
         const data = await response.json();
         console.log(data);
         expect(response.status).toEqual(400);
@@ -53,28 +20,12 @@ describe('Bookstore tests', () => {
     });
 
     test('user creation successful', async () => {
-        const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', 
-        {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newUser)
-        });
+        const response = await fetch(baseURL, option2);
         expect(response.status).toEqual(201);
     });
 
     test('token generation with an error', async () => {
-        const response = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', 
-        {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userWithWrongPass)
-        });
+        const response = await fetch(baseURL.replace('User', 'GenerateToken'), option1);
         const data = await response.json();
         console.log(data);
         expect(response.status).toEqual(200);
@@ -83,22 +34,25 @@ describe('Bookstore tests', () => {
     });
 
     test('token generation successful', async () => {
-        const response = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', 
-        {
-            method: 'POST',
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(existUser)
-        });
+        const response = await fetch(baseURL.replace('User', 'GenerateToken'), option0);
         const data = await response.json();
         console.log(data);
         expect(response.status).toEqual(200);
         expect(data.status).not.toBe('Failed');
         expect(data.result).toEqual('User authorized successfully.');
     });
+
+    test('authorize user', async () => {
+        const response = await fetch(baseURL.replace('User', 'Authorized'), option0);
+        const data = await response.json();
+        console.log(data);
+        expect(response.status).toEqual(200);
+    });
+
+    test('get user', async () => {
+        const response = await fetch(baseURL.concat('/', userId), option3);
+        const data = await response.json();
+        console.log(data);
+        expect(response.status).toEqual(200);
+    });
 });
-
-
-// Генерация токена c ошибкой
