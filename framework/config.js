@@ -29,7 +29,16 @@ const option2 = {
     body: JSON.stringify(newUser)
 };
 
-const option3= {
+const option3 = {
+    method: 'POST',
+    headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(existUser)
+};
+
+const option4= {
     method: 'GET',
     headers: {
         'accept': 'application/json',
@@ -37,4 +46,4 @@ const option3= {
 };
 
 
-export {baseURL, option0, option1, option2, option3};
+export {baseURL, option0, option1, option2, option3, option4};
