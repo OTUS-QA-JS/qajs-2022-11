@@ -38,7 +38,7 @@ const option3 = {
     body: JSON.stringify(existUser)
 };
 
-const option4= {
+const option4 = {
     method: 'GET',
     headers: {
         'accept': 'application/json',
