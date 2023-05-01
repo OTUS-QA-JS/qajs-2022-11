@@ -1,5 +1,7 @@
-import {baseURL, option0, option1, option2, option3} from "../framework/config";
-import { userId } from "../framework/fixtures";
+import {baseURL, option0, option1, option2, option3, option4} from "../framework/config";
+import {userId, existUser} from "../framework/fixtures";
+
+let authToken = '';
 
 describe('Bookstore tests', () => {
     test('сreating a user with an error, the login is already in use', async () => {
@@ -40,20 +42,31 @@ describe('Bookstore tests', () => {
         expect(response.status).toEqual(200);
         expect(data.status).not.toBe('Failed');
         expect(data.result).toEqual('User authorized successfully.');
+        authToken = data.token;
+        console.log(authToken)
     });
 
     test('authorize user', async () => {
-        const response = await fetch(baseURL.replace('User', 'Authorized'), option0);
+        const response = await fetch(baseURL.replace('User', 'Authorized'), {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify(existUser)
+        });
         const data = await response.json();
         console.log(data);
         expect(response.status).toEqual(200);
     });
 
     test('get user', async () => {
-        const response = await fetch(baseURL.concat('/', userId), option3);
+        const response = await fetch(baseURL.concat('/', userId), option4);
         const data = await response.json();
         console.log(data);
         expect(response.status).toEqual(200);
     });
+
 });
 
