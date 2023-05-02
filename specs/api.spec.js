@@ -1,6 +1,16 @@
-/* 
+import {account_endpoint} from './configs/config.js'
+import {autorization_endPoint} from './configs/config.js'
+import {deleteAccount_endpoint} from './configs/config.js'
+import {generateToken_endpoint} from './configs/config.js'
+
+
+import {generateUserToken} from './controllers/controller.js'
+import {createNewUser} from './controllers/controller.js'
+
+// ######################################################################
+
 test ('User already exists error', async () => {
-    const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
+    const response = await fetch(account_endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -18,7 +28,7 @@ test ('User already exists error', async () => {
 
 
 test ('password validation', async () => {
-    const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
+    const response = await fetch(account_endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -38,7 +48,7 @@ test ('password validation', async () => {
 
 test ('Creating a new user', async () => {
     let name = Date.now() // обеспечивает создание уникального имени, т.к. для успешного создания пользователя нужен уникальный userName
-    const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
+    const response = await fetch(account_endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -56,7 +66,7 @@ test ('Creating a new user', async () => {
 
 
 test ('Token generation error', async () => {
-    const response = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', {
+    const response = await fetch(generateToken_endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -76,7 +86,7 @@ test ('Token generation error', async () => {
 
 
 test ('Token generation successful', async () => {
-    const response = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', {
+    const response = await fetch(generateToken_endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,41 +102,12 @@ test ('Token generation successful', async () => {
     expect(response.status).toBe(200);
     expect(data.status).toBe("Success");
 });
- */
+ 
 
 
 //######################################################################################################
 //###### HomeWork of 'Библиотеки для тестирования API'
 //######################################################################################################
-
-import {account_endpoint} from './configs/config.js'
-import {autorization_endPoint} from './configs/config.js'
-import {deleteAccount_endpoint} from './configs/config.js'
-
-
-import {generateUserToken} from './controllers/controller.js'
-import {createNewUser} from './controllers/controller.js'
-
-
-/* 
-test ('User already exists error', async () => {
-    const response = await fetch(account_endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            "userName": "Totot",
-            "password": "AAbb33^^99"
-        })
-      })
-    const data = await response.json();
-    console.log(data);
-    console.log(response.status);
-    expect(data.message).toBe('User exists!');
-    expect(data.code).toBe('1204');
-    expect(response.status).toEqual(406);
-});
- */
-
 
 
 test ('authorization', async () => {
@@ -146,30 +127,35 @@ test ('authorization', async () => {
 });
 
 
-test ('delete User', async () => {
-    let newUser = await createNewUser()
+test ('deleting User', async () => {
+    let newUserID = await createNewUser()
     let token = await generateUserToken()
-    const response = await fetch(deleteAccount_endpoint + newUser/ + token, {
+    const response = await fetch(deleteAccount_endpoint + newUserID, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            "userName": "Totot",
-            "password": "AAbb33^^99"
-        })
+        headers: { 'Authorization': 'Bearer ' + token }
       })
-    const data = await response.json();
-    console.log(data);
     console.log(response.status);
-    expect(data).toBe(true);
+    
+    expect(response.status).toEqual(204);
+});
+ 
+
+test ('getting information about user', async () => {
+    let newUserID = await createNewUser()
+    let token = await generateUserToken()
+    const response = await fetch(account_endpoint + newUserID, {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token }
+      })
+    console.log(response.status);
     expect(response.status).toEqual(200);
 });
-
  
 
 
-
-//////sandbox
-
+//####################
+// My own sandbox
+//#####################
 /* 
 console.log(await createNewUser())
 // let ggg = await createNewUser();

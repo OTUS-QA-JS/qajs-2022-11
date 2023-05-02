@@ -1,5 +1,5 @@
-let name = Date.now() 
-let pass = "AAbb33^^af"
+import {name} from '../configs/config.js'
+import {pass} from '../configs/config.js'
 
 const createNewUser = async () => {
     const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
@@ -19,8 +19,7 @@ const createNewUser = async () => {
 };
 
 export {createNewUser}
-//export {name as createdNewUserName}
-//export {pass as createdNewUserPass}
+
 
 
 const generateUserToken = async () => {
