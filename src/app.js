@@ -34,8 +34,30 @@ export const getTotal = (items = [], discount = 0) => {
     if (discount < 0) {
         throw new Error('Процент скидки не может быть отрицательным')
     }
-    const total = items.reduce((acc, item, ) => {
+    const total = items.reduce((acc, item) => {
         return acc + item.price * item.quantity;
     }, 0)
     return total - total * discount / 100;
 }
+
+const scores = {
+    Anna: 10,
+    Olga: 1,
+    Ivan: 5
+}
+/**
+ * Подсчет суммы баллов всех пользователей
+ * @param {{nikeName: number}} object
+ * @example getScore({Anna: 10, Olga: 1, Ivan: 5}) // 16
+ * @returns {number}
+ */
+
+function getScore1(object) {
+    let score = 0
+    for (let nickname in object) {
+        score = score + object[nickname]
+    }
+    return score
+}
+
+console.log(getScore2(scores))
