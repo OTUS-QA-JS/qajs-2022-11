@@ -1,3 +1,6 @@
+import { createUser, generateToken, authorization, userDelete, userInfo } from '../helpers/apiHelpers'
+import { getRandomArbitrary } from '../helpers/randomHelper'
+
 // Вариант 1:
 // Напишите 5 апи-тестов на сервис bookstore
 // https://bookstore.demoqa.com/swagger/
@@ -8,35 +11,6 @@
 //     Создание пользователя успешно
 //     Генерация токена c ошибкой
 //     Генерация токена успешно
-
-async function createUser(userName, password) {
-    const response = await fetch('https://bookstore.demoqa.com/Account/v1/User', {
-        method: 'post',
-        body: JSON.stringify({
-            'userName': userName,
-            'password': password
-        }),
-        headers: { 'Content-Type': 'application/json' }
-    })
-    return response
-}
-
-async function generateToken(userName, password) {
-    const response = await fetch('https://bookstore.demoqa.com/Account/v1/GenerateToken', {
-        method: 'post',
-        body: JSON.stringify({
-            'userName': userName,
-            'password': password
-        }),
-        headers: { 'Content-Type': 'application/json' }
-    })
-    return response
-}
-
-function getRandomArbitrary(min, max) {
-    return Math.floor(Math.random() * (max - min))
-}
-
 
 describe('5 апи-тестов на сервис bookstore', () => {
     test('Создание пользователя c ошибкой, логин уже используется', async () => {
@@ -82,4 +56,28 @@ describe('5 апи-тестов на сервис bookstore', () => {
             expect(data.status).toBe('Success')
             expect(data.token).not.toBe(null)
         })
+})
+
+// Вариант 1:
+// Напишите API тесты на следующие апи ручки (api endpoints)
+
+    // Авторизация
+    // Удаление пользователя
+    // Получение информации о пользователе
+    // При написании АПИ-тестов обязательно использовать контроллеры, так же вынести в конфиг данные для авторизации, базовый УРЛ.
+    // Будет плюсом, если так же вы отрефакторите тесты написанные в рамках ДЗ АПИ тесты
+
+describe('Домашнее задание 7', () => {
+    test('Авторизация', async () => {
+        
+        const response = await authorization()
+    }),
+
+    test('Удаление пользователя', async () => {
+
+    }),
+
+    test('Получение информации о пользователе', async () => {
+
+    })
 })

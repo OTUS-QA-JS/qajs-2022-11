@@ -59,5 +59,3 @@ function getScore1(object) {
     }
     return score
 }
-
-console.log(getScore2(scores))
