@@ -104,13 +104,13 @@ describe('Подсчёт суммы заказа', () => {
         expect(getTotal([{ price: 10, quantity: 10 }])).toBe(100)
     }),
 
-        test('Несколько item', () => {
-            expect(getTotal([{ price: 10, quantity: 1 }, { price: 10, quantity: 9 }])).toBe(100)
-        }),
+    test('Несколько item', () => {
+        expect(getTotal([{ price: 10, quantity: 1 }, { price: 10, quantity: 9 }])).toBe(100)
+    }),
 
-        test('Использование значения discount не по умолчанию 0', () => {
-            expect(getTotal([{ price: 10, quantity: 10 }], 100)).toBe(0)
-        })
+    test('Использование значения discount не по умолчанию 0', () => {
+        expect(getTotal([{ price: 10, quantity: 10 }], 100)).toBe(0)
+    })
 })
 
 describe('Подсчёт суммы заказа с параметризацией', () => {
