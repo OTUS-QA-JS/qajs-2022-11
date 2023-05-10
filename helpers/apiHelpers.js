@@ -71,12 +71,13 @@ async function generateToken(userName, password) {
  * @param {string} userName
  * @param {string} password
  */
-async function authorization() {
-    const getToken = await generateToken(config.credentials.userName, config.credentials.password)
+async function authorization(userName, password) {
+    const getToken = await generateToken(userName, password)
+    const token = getToken.data.token
     const response = await axios.post(`${config.baseURL}/Account/v1/Authorized`,
         {
-            'userName': config.credentials.userName,
-            'password': config.credentials.password
+            'userName': userName,
+            'password': password
         },
         {
             'Content-Type': 'application/json',
@@ -85,8 +86,9 @@ async function authorization() {
         {
             validateStatus: false
         })
-    return response
+    return {'authorizationResponse': response, 'token': token}
 }
+
 
 /**
  * Удаление пользователя
@@ -94,12 +96,15 @@ async function authorization() {
  * @param {string} userID
  */
 async function userDelete() {
-    const userName = `test${getRandomArbitrary(100000, 10000000000000)}`
-    createUser(userName, 'Test!0test')
-    generateToken(userName, 'Test!0test')
-    
-    
-    const response = await axios.delete(`${config.baseURL}/v1/User/` + userID)
+    const user = (await createUser(config.credentials.userName, config.credentials.password))
+    const userID = user.data.userID
+    const userAuthorization = await authorization(config.credentials.userName, config.credentials.password)
+    const token = userAuthorization['token']
+    const response = await axios.delete(`${config.baseURL}/Account/v1/User/` + userID, 
+    {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + token
+    })
     return response
 }
 

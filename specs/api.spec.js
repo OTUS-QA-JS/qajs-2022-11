@@ -22,36 +22,36 @@ describe('5 апи-тестов на сервис bookstore', () => {
         expect(response.data.message).toBe('User exists!')
     }),
 
-        test('Создание пользователя c ошибкой, пароль не подходит', async () => {
-            const response = await createUser('test', 'Test')
-            expect(response.status).toBe(400)
-            expect(response.data.code).toBe('1300')
-            expect(response.data.message).toBe("Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.")
-        }),
+    test('Создание пользователя c ошибкой, пароль не подходит', async () => {
+        const response = await createUser('test', 'Test')
+        expect(response.status).toBe(400)
+        expect(response.data.code).toBe('1300')
+        expect(response.data.message).toBe("Passwords must have at least one non alphanumeric character, one digit ('0'-'9'), one uppercase ('A'-'Z'), one lowercase ('a'-'z'), one special character and Password must be eight characters or longer.")
+    }),
 
-        test('Создание пользователя успешно', async () => {
-            const userName = `test${getRandomArbitrary(100000, 100000000)}`
-            const response = await createUser(userName, 'Test!0test')
-            expect(response.status).toBe(201)
-            expect(response.data.username).toBe(userName)
-        }),
+    test('Создание пользователя успешно', async () => {
+        const userName = `test${getRandomArbitrary(100000, 100000000)}`
+        const response = await createUser(userName, 'Test!0test')
+        expect(response.status).toBe(201)
+        expect(response.data.username).toBe(userName)
+    }),
 
-        test('Генерация токена c ошибкой', async () => {
+    test('Генерация токена c ошибкой', async () => {
 
-            const response = await generateToken('test', `${getRandomArbitrary(1, 10000000000000)}`)
-            expect(response.status).toBe(200)
-            expect(response.data.status).toBe('Failed')
-            expect(response.data.token).toBe(null)
-        }),
+        const response = await generateToken('test', `${getRandomArbitrary(1, 10000000000000)}`)
+        expect(response.status).toBe(200)
+        expect(response.data.status).toBe('Failed')
+        expect(response.data.token).toBe(null)
+    }),
 
-        test('Генерация токена успешно', async () => {
-            const userName = `test${getRandomArbitrary(100000, 10000000000000)}`
-            createUser(userName, 'Test!0test')
-            const response = await generateToken(userName, 'Test!0test')
-            expect(response.status).toBe(200)
-            expect(response.data.status).toBe('Success')
-            expect(response.data.token).not.toBe(null)
-        })
+    test('Генерация токена успешно', async () => {
+        const userName = `test${getRandomArbitrary(100000, 10000000000000)}`
+        await createUser(userName, 'Test!0test')
+        const response = await generateToken(userName, 'Test!0test')
+        expect(response.status).toBe(200)
+        expect(response.data.status).toBe('Success')
+        expect(response.data.token).not.toBe(null)
+    })
 })
 
 // Вариант 1:
@@ -65,21 +65,18 @@ describe('5 апи-тестов на сервис bookstore', () => {
 
 describe('Авторизация', () => {
     test('Успешная авторизация', async () => {
-        const response = await authorization()
-        expect(response.status).toBe(200)
-        expect(response.data).toBe(true)
+        const userName = `test${getRandomArbitrary(100000, 10000000000000)}`
+        await createUser(userName, 'Test!0test')
+        const response = await authorization(userName, 'Test!0test')
+        expect(response['authorizationResponse'].status).toBe(200)
+        expect(response['authorizationResponse'].data).toBe(true)
     })
 })
 
 describe('Удаление пользователя', () => {
     test('Успешное удаление', async () => {
-        const userName = `test${getRandomArbitrary(100000, 100000000)}`
-        const responseCreateUser = await createUser(userName, 'Test!0test')
-        const dataCreateUser = await responseCreateUser.json()
-        const userID = dataCreateUser.userID
-        const responseUserDelete = await userDelete(userID)
-        const dataUserDelete = await responseUserDelete.json()
-        expect(responseUserDelete.status).toBe(200)
+        const response = await userDelete()
+        expect(response.status).toBe(204)
 
     })
 })
