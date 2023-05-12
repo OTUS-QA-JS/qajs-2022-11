@@ -1,16 +1,15 @@
-const { BASE_URL, USER_DATA } = require('./config.js');
+import config from './config.js';
 
-async function login() {
-  const response = await fetch(`${BASE_URL}/Account/v1/GenerateToken`, {
+const login = async () => {
+  const response = await fetch(`${config.baseUrl}/Account/v1/GenerateToken`, {
     method: 'POST',
-    body: JSON.stringify(USER_DATA),
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    body: JSON.stringify(config.user),
+    headers: { 'Content-Type': 'application/json' },
   });
+
   const data = await response.json();
-  console.log(data)
-}
+  return data.token;
+};
 
 module.exports = {
   login,
