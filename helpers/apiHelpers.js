@@ -1,6 +1,12 @@
 import axios from 'axios'
 import config from '../config.js'
-import { getRandomArbitrary } from '../helpers/randomHelper'
+// import { getRandomArbitrary } from '../helpers/randomHelper'
+
+const client = axios.create({
+    baseURL: config.baseURL,
+    validateStatus: false
+
+})
 
 /**
  * Создание нового ползователя
@@ -20,16 +26,12 @@ import { getRandomArbitrary } from '../helpers/randomHelper'
 //     return response
 // }
 
-async function createUser(userName, password) {
-    const response = await axios.post(`${config.baseURL}/Account/v1/User`,
+export const createUser = async (userName, password) => {
+    const response = await client.post('/Account/v1/User',
         {
             'userName': userName,
             'password': password
-        },
-        {
-            validateStatus: false
-        }
-    )
+        })
     return response
 }
 
@@ -51,18 +53,16 @@ async function createUser(userName, password) {
 //     return response
 // }
 
-async function generateToken(userName, password) {
-    const response = await axios.post(`${config.baseURL}/Account/v1/GenerateToken`,
+export const generateToken = async (userName, password) => {
+    const response = await client.post('/Account/v1/GenerateToken',
         {
-
             'userName': userName,
             'password': password
-        },
-        {
-            validateStatus: false
-        }
-    )
-    return response
+        })
+    return {
+        response: response,
+        token: response.data.token
+    }
 }
 
 /**
@@ -71,59 +71,51 @@ async function generateToken(userName, password) {
  * @param {string} userName
  * @param {string} password
  */
-async function authorization(userName, password) {
-    const getToken = await generateToken(userName, password)
-    const token = getToken.data.token
-    const response = await axios.post(`${config.baseURL}/Account/v1/Authorized`,
+export const authorization = async (userName, password) => {
+    const token = (await generateToken(userName, password)).token
+    const response = await client.post('/Account/v1/Authorized',
         {
             'userName': userName,
             'password': password
         },
         {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + getToken.data.token
-        },
-        {
-            validateStatus: false
+            'Authorization': 'Bearer ' + token
         })
-    return {'authorizationResponse': response, 'token': token}
+    return {
+        response: response,
+        token: token
+    }
 }
-
 
 /**
  * Удаление пользователя
  *
  * @param {string} userID
  */
-async function userDelete() {
-    const user = (await createUser(config.credentials.userName, config.credentials.password))
-    const userID = user.data.userID
-    const userAuthorization = await authorization(config.credentials.userName, config.credentials.password)
-    const token = userAuthorization['token']
-    const response = await axios.delete(`${config.baseURL}/Account/v1/User/` + userID, 
-    {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + token
-    })
+export const userDelete = async () => {
+    const res = (await createUser(config.credentials.userName, config.credentials.password))
+    const userID = res.data.userID
+    const auth = await authorization(config.credentials.userName, config.credentials.password)
+    const response = await client.delete('/Account/v1/User/' + userID,
+        {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + auth.token
+        })
+    console.log(response)
     return response
 }
+
 
 /**
  * Получение информации о пользователе
  */
-// async function userInfo() {
-//     authorization(config.credentials.userName, config.credentials.password)
-//     const response = await axios.get(`${config.baseURL}/Account/v1/User/` + config.credentials.userID,
-//         {
-//             'Authorization': 'Bearer ' + testUserToken
-//         })
-//     return response
-// }
-
-module.exports = {
-    createUser,
-    generateToken,
-    authorization,
-    userDelete,
-    // userInfo
+export const userInfo = async () => {
+    const userID = (await createUser(config.credentials.userName, config.credentials.password)).data.userID
+    const auth = (await authorization(config.credentials.userName, config.credentials.password))
+    const response = await client.get('/Account/v1/User/' + userID,
+        {
+            'Authorization': 'Bearer ' + auth.token
+        })
+    return response
 }
