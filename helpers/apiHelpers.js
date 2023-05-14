@@ -1,11 +1,10 @@
 import axios from 'axios'
 import config from '../config.js'
-// import { getRandomArbitrary } from '../helpers/randomHelper'
+import { faker } from '@faker-js/faker'
 
 const client = axios.create({
     baseURL: config.baseURL,
     validateStatus: false
-
 })
 
 /**
@@ -94,28 +93,33 @@ export const authorization = async (userName, password) => {
  * @param {string} userID
  */
 export const userDelete = async () => {
-    const res = (await createUser(config.credentials.userName, config.credentials.password))
-    const userID = res.data.userID
-    const auth = await authorization(config.credentials.userName, config.credentials.password)
+    const userID = (await createUser(config.credentials.userName, config.credentials.password)).data.userID
     const response = await client.delete('/Account/v1/User/' + userID,
         {
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + auth.token
+            headers:
+            {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + (await authorization(config.credentials.userName, config.credentials.password)).token
+            }
         })
-    console.log(response)
     return response
 }
 
 
 /**
  * Получение информации о пользователе
+ * @param {string} userID
  */
 export const userInfo = async () => {
-    const userID = (await createUser(config.credentials.userName, config.credentials.password)).data.userID
-    const auth = (await authorization(config.credentials.userName, config.credentials.password))
+    const userName = faker.internet.userName()
+    const userID = (await createUser(userName, config.credentials.password)).data.userID
     const response = await client.get('/Account/v1/User/' + userID,
         {
-            'Authorization': 'Bearer ' + auth.token
+            headers:
+            {
+                'Authorization': 'Bearer ' + (await authorization(userName, config.credentials.password)).token
+            }
         })
+    await userDelete()
     return response
 }

@@ -1,7 +1,6 @@
-// import { createUser, generateToken, authorization, userDelete, userInfo } from '../helpers/apiHelpers'
 import { getRandomArbitrary } from '../helpers/randomHelper'
 import * as apiHelpers from '../helpers/apiHelpers'
-// import config from '../config.js'
+import { faker } from '@faker-js/faker'
 
 // Вариант 1:
 // Напишите 5 апи-тестов на сервис bookstore
@@ -31,21 +30,21 @@ describe('5 апи-тестов на сервис bookstore', () => {
     }),
 
     test('Создание пользователя успешно', async () => {
-        const userName = `test${getRandomArbitrary(100000, 100000000)}`
+        const userName = faker.internet.userName()
         const request = await apiHelpers.createUser(userName, 'Test!0test')
         expect(request.status).toBe(201)
         expect(request.data.username).toBe(userName)
     }),
 
     test('Генерация токена c ошибкой', async () => {
-        const request = await apiHelpers.generateToken('test', `${getRandomArbitrary(1, 10000000000000)}`)
+        const request = await apiHelpers.generateToken('test', faker.internet.password())
         expect(request.response.status).toBe(200)
         expect(request.response.data.status).toBe('Failed')
         expect(request.response.data.token).toBe(null)
     })
 
     test('Генерация токена успешно', async () => {
-        const userName = `test${getRandomArbitrary(100000, 10000000000000)}`
+        const userName = faker.internet.userName()
         await apiHelpers.createUser(userName, 'Test!0test')
         const request = await apiHelpers.generateToken(userName, 'Test!0test')
         expect(request.response.status).toBe(200)
@@ -65,7 +64,7 @@ describe('5 апи-тестов на сервис bookstore', () => {
 
 describe('Авторизация', () => {
     test('Успешная авторизация', async () => {
-        const userName = `test${getRandomArbitrary(100000, 10000000000000)}`
+        const userName = faker.internet.userName()
         await apiHelpers.createUser(userName, 'Test!0test')
         const request = await apiHelpers.authorization(userName, 'Test!0test')
         expect(request.response.status).toBe(200)
@@ -82,8 +81,10 @@ describe('Удаление пользователя', () => {
 })
 
 describe('Получение информации о пользователе', () => {
-    test('Получение информации о пользователе', async () => {
+    test('Успешное получение информации о пользователе', async () => {
         const request = await apiHelpers.userInfo()
         expect(request.status).toBe(200)
+        expect(request.data).not.toBe(null)
+
     })
 })
