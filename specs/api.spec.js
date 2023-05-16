@@ -11,7 +11,9 @@ import { createNewUser } from './controllers/controller.js'
 import { testUserAuthorization } from './controllers/controller.js';
 import { creatingBook } from './controllers/controller.js';
 
-import { BASE_URL, name, pass, bookID} from './configs/config.js'
+import {
+  BASE_URL, name, pass, bookID, name_for_BookCollection, pass_for_BookCollection
+} from './configs/config.js'
 
 
 // ######################################################################
@@ -115,8 +117,8 @@ test ('Token generation successful', async () => {
 //######################################################################################################
 //###### HomeWork of 'Библиотеки для тестирования API'
 //######################################################################################################
-
 /* 
+
 test ('authorization', async () => {
     const response = await fetch(`${BASE_URL}/Account/v1/Authorized`, {
         method: 'POST',
@@ -135,8 +137,8 @@ test ('authorization', async () => {
 
 
 test ('deleting User', async () => {
-    let newUserID = await createNewUser()
-    let token = await generateUserToken()
+    let newUserID = await createNewUser(name, pass)
+    let token = await generateUserToken(name, pass)
     const response = await fetch(`${BASE_URL}/Account/v1/User/` + newUserID, {
         method: 'DELETE',
         headers: { 'Authorization': 'Bearer ' + token }
@@ -145,12 +147,11 @@ test ('deleting User', async () => {
     
     expect(response.status).toEqual(204);
 });
-  */
+
  
-// Запуск этого теста ломает тест "Book_creating(add?)" Почему?
 test ('getting information about user', async () => {
-    let newUserID = await createNewUser()
-    let token = await generateUserToken()
+    let newUserID = await createNewUser(name, pass)
+    let token = await generateUserToken(name, pass)
     const response = await fetch(`${BASE_URL}/Account/v1/User` + newUserID, {
         method: 'GET',
         headers: { 'Authorization': 'Bearer ' + token }
@@ -160,17 +161,16 @@ test ('getting information about user', async () => {
 });
   
 
-
-
+ */
 
 //######################################################################################################
 //###### HomeWork of 'Шаблоны проектирования в тестировании API '
 //######################################################################################################
 
- 
+ /* 
 test ('Book_creating(add?)', async () => {
-    let newUserID = await createNewUser();
-    let token = await generateUserToken();
+    let newUserID = await createNewUser(name_for_BookCollection, pass_for_BookCollection);
+    let token = await generateUserToken(name_for_BookCollection, pass_for_BookCollection);
     //let userAuth = await testUserAuthorization();
    
     const response = await fetch(`${BASE_URL}/BookStore/v1/Books`, {
@@ -192,20 +192,20 @@ test ('Book_creating(add?)', async () => {
     expect(data.books[0]).toEqual({ isbn: '9781449325862' });
     expect(response.status).toBe(201);
 });
+  */
 
-/* 
 test ('Book_updating', async () => {
-    //let newUserID = await createNewUser();
-    //let token = await generateUserToken();
-    //await testUserAuthorization();
-    //await creatingBook();
+    let newUserID = await createNewUser(name_for_BookCollection, pass_for_BookCollection);
+    let token = await generateUserToken(name_for_BookCollection, pass_for_BookCollection);
+    await testUserAuthorization(name_for_BookCollection, pass_for_BookCollection);
+    await creatingBook(name_for_BookCollection, pass_for_BookCollection);
    
     const response = await fetch(`${BASE_URL}/BookStore/v1/Books/${bookID}`, {
         method: 'PUT',
         headers: {  'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + creatingBook.token},
+                    'Authorization': 'Bearer ' + token},
         body: JSON.stringify({
-            "userId": creatingBook.newUserID,
+            "userId": newUserID,
             "isbn": bookID,
           })
       })
@@ -219,15 +219,14 @@ test ('Book_updating', async () => {
     expect(response.status).toBe(201);
 });
 
- */
+ 
 
  
 
 
-
-//####################
+//###################################################
 // My own sandbox
-//#####################
+//###################################################
 /* 
 console.log(await createNewUser())
 // let ggg = await createNewUser();
@@ -244,13 +243,18 @@ console.log(await createNewUser());
 console.log(await generateUserToken());
  */
 
-
  /* 
 console.log(await createNewUser());
 console.log(await generateUserToken());
 console.log(await testUserAuthorization());
  */
+
 /* 
-console.log(await creatingBook());
-console.log(await creatingBook()+'blb');
- */
+console.log(await creatingBook(name_for_BookCollection, pass_for_BookCollection));
+console.log(await creatingBook(name_for_BookCollection, pass_for_BookCollection)+'blb');
+*/
+
+/* 
+console.log(await createNewUser(name, pass) + ' first');
+console.log(await createNewUser(name, pass) + ' second');
+*/

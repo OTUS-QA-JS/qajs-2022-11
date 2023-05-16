@@ -1,15 +1,17 @@
 import {name} from '../configs/config.js'
 import {pass} from '../configs/config.js'
-import { BASE_URL, bookID } from '../configs/config.js';
+import { 
+  BASE_URL, bookID, name_for_BookCollection, pass_for_BookCollection 
+} from '../configs/config.js';
 
 
-const createNewUser = async () => {
+const createNewUser = async ( username, password ) => {
     const response = await fetch(`${BASE_URL}/Account/v1/User`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            "userName": name,
-            "password": pass
+            "userName": username,
+            "password": password
         })
       })
     const data = await response.json();
@@ -24,13 +26,13 @@ export {createNewUser}
 
 
 
-const generateUserToken = async () => {
+const generateUserToken = async ( username, password ) => {
     const response = await fetch(`${BASE_URL}/Account/v1/GenerateToken`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            "userName": name,
-            "password": pass
+            "userName": username,
+            "password": password
         })
       })
     const data = await response.json();
@@ -41,13 +43,13 @@ const generateUserToken = async () => {
 export {generateUserToken}
 
 
-const testUserAuthorization = async () => {
+const testUserAuthorization = async ( username, password ) => {
     const response = await fetch(`${BASE_URL}/Account/v1/Authorized`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            "userName": name,
-            "password": pass
+            "userName": username,
+            "password": password
         })
       })
     const data = await response.json();
@@ -58,9 +60,9 @@ const testUserAuthorization = async () => {
 export {testUserAuthorization}
 
 
-const creatingBook = async () => {
-    let newUserID = await createNewUser();
-    let token = await generateUserToken();
+const creatingBook = async (username, password) => {
+    let newUserID = await createNewUser(username, password);
+    let token = await generateUserToken(username, password);
     //let userAuth = await testUserAuthorization();
    
     const response = await fetch(`${BASE_URL}/BookStore/v1/Books`, {
