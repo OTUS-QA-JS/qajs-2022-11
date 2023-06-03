@@ -1,4 +1,3 @@
-import {baseURL} from "../framework/config";
 import {userId, existUser, userWithWrongPass, newUser} from "../framework/fixtures";
 import { createUser, getToken, authUser, getUser, delUser } from "../framework/UserServices";
 
