@@ -78,4 +78,25 @@ const delUser = async (existUserId, token) => {
   }; 
 };
 
-export {createUser, getToken, authUser, getUser, delUser};
+const addListOfBooks = async (userId, book) => {
+  const response = await fetch(baseURL + 'BookStore/v1/Books',{
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    data: {
+      'userId': `${userId}`,
+      'collectionOfIsbns': [{
+        'isbn': `${book}`
+    }]
+    }
+  });
+  const data = await response.json();
+  return {
+    data,
+    status: response.status
+  };
+};
+
+export {createUser, getToken, authUser, getUser, delUser, addListOfBooks};
