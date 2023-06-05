@@ -17,7 +17,7 @@ import {
 
 
 // ######################################################################
-/* 
+
 test ('User already exists error', async () => {
     const response = await fetch(`${BASE_URL}/Account/v1/User`, {
         method: 'POST',
@@ -112,12 +112,12 @@ test ('Token generation successful', async () => {
     expect(data.status).toBe("Success");
 });
  
- */
+
 
 //######################################################################################################
 //###### HomeWork of 'Библиотеки для тестирования API'
 //######################################################################################################
-/* 
+
 
 test ('authorization', async () => {
     const response = await fetch(`${BASE_URL}/Account/v1/Authorized`, {
@@ -161,7 +161,7 @@ test ('getting information about user', async () => {
 });
   
 
- */
+ 
 
 //######################################################################################################
 //###### HomeWork of 'Шаблоны проектирования в тестировании API '
@@ -192,8 +192,8 @@ test ('Book_creating(add?)', async () => {
     expect(data.books[0]).toEqual({ isbn: '9781449325862' });
     expect(response.status).toBe(201);
 });
-  */
 
+/* 
 test ('Book_updating', async () => {
     let newUserID = await createNewUser(name_for_BookCollection, pass_for_BookCollection);
     let token = await generateUserToken(name_for_BookCollection, pass_for_BookCollection);
@@ -219,7 +219,7 @@ test ('Book_updating', async () => {
     expect(response.status).toBe(201);
 });
 
- 
+  */
 
  
 
