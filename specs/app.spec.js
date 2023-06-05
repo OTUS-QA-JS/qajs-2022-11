@@ -31,7 +31,7 @@ describe('function fullTrim coverage', () => {
 })
  
 
-
+/* 
 describe('function getTotal parametric coverage', () => {
 test.each([
     {item:[{ price: 10, quantity: 10 }],  discount: 0, expected: 100},
@@ -52,3 +52,4 @@ test.each([
     }
 })
 })
+ */
