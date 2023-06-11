@@ -81,6 +81,7 @@ describe('Playecholder service tests', () => {
       const {data, status} = await createResource(plUserID);
       
       expect(status).toEqual(201);
+      expect(data.userId).toEqual(plUserID);
       expect(data.id).toEqual(101);
     });
 });

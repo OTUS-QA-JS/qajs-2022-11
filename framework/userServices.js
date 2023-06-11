@@ -109,7 +109,7 @@ const createResource = async (plUserID) => {
     headers: {
       'Content-type': 'application/json'
     },
-    body: JSON.stringify({plUserID})
+    body: JSON.stringify({userId: plUserID})
   });
   const data = await response.json();
   return {
