@@ -1,4 +1,4 @@
-import { baseURL } from "./config";
+import { baseURL, placeholderURL } from "./config";
 
 const createUser = async (user) => {
   const response = await fetch(baseURL + 'Account/v1/User', {
@@ -78,6 +78,9 @@ const delUser = async (existUserId, token) => {
   }; 
 };
 
+/**
+ * @todo
+ */
 const addListOfBooks = async (userId, book) => {
   const response = await fetch(baseURL + 'BookStore/v1/Books',{
     method: 'POST',
@@ -99,4 +102,20 @@ const addListOfBooks = async (userId, book) => {
   };
 };
 
-export {createUser, getToken, authUser, getUser, delUser, addListOfBooks};
+//placeholders services
+const createResource = async (plUserID) => {
+  const response = await fetch(placeholderURL + 'posts', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({plUserID})
+  });
+  const data = await response.json();
+  return {
+    data,
+    status: response.status
+  }; 
+};
+
+export {createUser, getToken, authUser, getUser, delUser, addListOfBooks, createResource};

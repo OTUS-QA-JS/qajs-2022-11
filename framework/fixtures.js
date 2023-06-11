@@ -16,5 +16,6 @@ const userWithWrongPass = {
 };
 
 const userId = "002a2424-10fa-4dca-a18a-014fb83b5a31";
+const plUserID = '1';
 
-export {newUser, userWithWrongPass, existUser, userId};
+export {newUser, userWithWrongPass, existUser, userId, plUserID};

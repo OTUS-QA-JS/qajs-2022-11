@@ -1,5 +1,5 @@
-import {userId, existUser, userWithWrongPass, newUser} from "../framework/fixtures";
-import { createUser, getToken, authUser, getUser, delUser } from "../framework/UserServices";
+import { userId, existUser, userWithWrongPass, newUser, plUserID } from "../framework/fixtures";
+import { createUser, getToken, authUser, getUser, delUser, createResource } from "../framework/userServices";
 
 let authToken = '';
 
@@ -76,3 +76,11 @@ describe('Bookstore tests', () => {
       });
 });
 
+describe('Playecholder service tests', () => {
+    test('creating a resource', async () => {
+      const {data, status} = await createResource(plUserID);
+      
+      expect(status).toEqual(201);
+      expect(data.id).toEqual(101);
+    });
+});
