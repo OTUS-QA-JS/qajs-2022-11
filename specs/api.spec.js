@@ -1,5 +1,5 @@
-import { userId, existUser, userWithWrongPass, newUser, plUserID } from "../framework/fixtures";
-import { createUser, getToken, authUser, getUser, delUser, createResource } from "../framework/userServices";
+import { userId, existUser, userWithWrongPass, newUser, plUserID, randomTitle } from "../framework/fixtures";
+import { createUser, getToken, authUser, getUser, delUser, createResource, patchResourse } from "../framework/userServices";
 
 let authToken = '';
 
@@ -22,7 +22,7 @@ describe('Bookstore tests', () => {
 
     test('user creation successful', async () => {
       const {status} = await createUser(newUser);
-  
+      
       expect(status).toEqual(201);
     });
 
@@ -41,7 +41,6 @@ describe('Bookstore tests', () => {
       expect(data.status).not.toBe('Failed');
       expect(data.result).toEqual('User authorized successfully.');
       authToken = data.token;
-      console.log(authToken);
     });
 
     test('authorize user', async () => {
@@ -84,4 +83,13 @@ describe('Playecholder service tests', () => {
       expect(data.userId).toEqual(plUserID);
       expect(data.id).toEqual(101);
     });
+
+    test('patching a resource', async () => {
+      const {data, status} = await patchResourse(randomTitle);
+
+      expect(status).toEqual(200);
+      expect(data.title).toEqual(randomTitle);
+      expect(data.userId).toEqual(1);
+      expect(data.id).toEqual(1);
+    })
 });

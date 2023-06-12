@@ -1,4 +1,5 @@
 import { baseURL, placeholderURL } from "./config";
+// import { plUserID, randomTitle } from "./fixtures";
 
 const createUser = async (user) => {
   const response = await fetch(baseURL + 'Account/v1/User', {
@@ -79,7 +80,7 @@ const delUser = async (existUserId, token) => {
 };
 
 /**
- * @todo
+ * @todo try to fix timeout error
  */
 const addListOfBooks = async (userId, book) => {
   const response = await fetch(baseURL + 'BookStore/v1/Books',{
@@ -103,13 +104,15 @@ const addListOfBooks = async (userId, book) => {
 };
 
 //placeholders services
-const createResource = async (plUserID) => {
+const createResource = async (userId) => {
   const response = await fetch(placeholderURL + 'posts', {
     method: 'POST',
     headers: {
       'Content-type': 'application/json'
     },
-    body: JSON.stringify({userId: plUserID})
+    body: JSON.stringify({
+      userId: userId
+    })
   });
   const data = await response.json();
   return {
@@ -118,4 +121,21 @@ const createResource = async (plUserID) => {
   }; 
 };
 
-export {createUser, getToken, authUser, getUser, delUser, addListOfBooks, createResource};
+const patchResourse = async (randomTitle) => {
+  const response = await fetch(placeholderURL + 'posts/1', {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: randomTitle
+    })
+  });
+    const data = await response.json();
+    return {
+    data,
+    status: response.status
+  }; 
+};
+
+export { createUser, getToken, authUser, getUser, delUser, addListOfBooks, createResource, patchResourse };

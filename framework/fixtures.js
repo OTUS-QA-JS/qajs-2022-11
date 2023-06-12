@@ -1,4 +1,4 @@
-import {faker} from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 const existUser = {
     userName: "TestUser102",
@@ -16,6 +16,7 @@ const userWithWrongPass = {
 };
 
 const userId = "002a2424-10fa-4dca-a18a-014fb83b5a31";
-const plUserID = '1';
+const plUserID = faker.random.numeric();
+const randomTitle = faker.random.words();
 
-export {newUser, userWithWrongPass, existUser, userId, plUserID};
+export { newUser, userWithWrongPass, existUser, userId, plUserID, randomTitle };
