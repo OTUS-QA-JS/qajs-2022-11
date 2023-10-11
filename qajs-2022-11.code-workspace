@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"dbaeumer.vscode-eslint", 
+			"esbenp.prettier-vscode",
+			"EditorConfig.EditorConfig",
+			"Orta.vscode-jest",
+			"firsttris.vscode-jest-runner"
+		]
+	}
+}

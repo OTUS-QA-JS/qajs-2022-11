@@ -1,18 +1,19 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
-  root: true,
-  plugins: ['jest'],
+  plugins: ["jest", "prettier"],
   env: {
-    browser: true,
     es2021: true,
-    node: true
+    node: true,
   },
-  extends: ['standard', 'plugin:jest/recommended'],
-  overrides: [
+  extends: [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "plugin:prettier/recommended",
   ],
+  overrides: [],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  rules: {
-  }
-}
+  rules: {},
+};
