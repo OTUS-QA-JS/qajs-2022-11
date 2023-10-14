@@ -40,7 +40,7 @@ describe("nameIsValid 100% coverage", () => {
       expect(nameIsValid("t")).toBe(false);
     });
     test("check nameIsValid false number", () => {
-      expect(nameIsValid("t")).toBe(false);
+      expect(nameIsValid(3)).toBe(false);
     });
   });
 
@@ -61,20 +61,14 @@ describe("fullTrim 100% coverage", () => {
     });
   });
 
-  describe("fullTrim check function", () => {
-    test("check number", () => {
-      expect(fullTrim).toBeDefined();
-    });
-    test("check discount", () => {
-      expect(fullTrim).toBeDefined();
-    });
-  });
-
   describe("fullTrim parametric test", () => {
     test.each`
-      a          | expected
-      ${"test "} | ${"test"}
-      ${" test"} | ${"test"}
+      a           | expected
+      ${"test "}  | ${"test"}
+      ${" test"}  | ${"test"}
+      ${"test"}   | ${"test"}
+      ${" test "} | ${"test"}
+      ${"te st"}  | ${"test"}
     `("$a = $expected", ({ a, expected }) => {
       expect(fullTrim(a)).toBe(expected);
     });
