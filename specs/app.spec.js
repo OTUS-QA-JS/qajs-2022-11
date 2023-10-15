@@ -22,12 +22,12 @@ describe("nameIsValid function tests", () => {
 	test.each`
     name             | expected
     ${"John"}        | ${true}
-		${""}            | ${false}
-    ${"J"}  				 | ${false}
+    ${""}            | ${false}
+    ${"J"}           | ${false}
     ${"J "}          | ${false}
-		${" J"}          | ${false}
-    ${NaN}           | ${false}
-		${'John Doe'}    | ${false}
+    ${" J"}          | ${false}
+    ${NaN}           | ${false} 
+    ${'John Doe'}    | ${false}
   `("nameIsValid($name) = $expected", ({ name, expected }) => {
 		expect(nameIsValid(name)).toBe(expected);
 	});
@@ -51,10 +51,10 @@ describe('fullTrim', () => {
 
 describe("fullTrim function tests", () => {
 	test.each`
-    string            											 | expected
+    string                                   | expected
     ${"  ДваПробелаОдинПробел "}             | ${'ДваПробелаОдинПробел'}
-		${'Два  Пробела Один Пробел'}            | ${'ДваПробелаОдинПробел'}
-    ${""}  				 													 | ${''}
+    ${'Два  Пробела Один Пробел'}            | ${'ДваПробелаОдинПробел'}
+    ${""}                                    | ${''}
     ${'БезПробелов'}                         | ${'БезПробелов'}
   `("fullTrim($string) = $expected", ({ string, expected }) => {
 		expect(fullTrim(string)).toBe(expected);
