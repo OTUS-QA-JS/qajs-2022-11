@@ -88,3 +88,4 @@ describe("getTotal function tests", () => {
     expect(getTotal(items, discount)).toBe(102.4);
   });
 });
+// fsfs
