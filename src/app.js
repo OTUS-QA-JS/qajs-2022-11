@@ -40,3 +40,25 @@ export const getTotal = (items = [], discount = 0) => {
   }, 0);
   return total - (total * discount) / 100;
 };
+
+/*
+[
+  {
+    price: 100,
+    q: 10
+  },
+  {
+    price: 200,
+    q: 5
+  },
+  {
+    price: 500,
+    q: 1
+  }
+]
+
+acc = 0 + 1000 = 1000
+acc = 1000 + 1000 = 2000
+
+acc = 2000 + 500 = 2500 - 250 = 2250
+*/
