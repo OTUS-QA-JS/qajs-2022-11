@@ -40,3 +40,39 @@ export const getTotal = (items = [], discount = 0) => {
   }, 0);
   return total - (total * discount) / 100;
 };
+
+/**
+ * Calculates the total score of all students from a given object
+ *
+ * @param {Object} students - An object where keys are student names and values are their scores (integers between 1 and 10)
+ * @returns {number} The total score of all students
+ *
+ * @example
+ *
+ * const studentsScores = {
+ *   Alice: 8,
+ *   Bob: 7,
+ *   Charlie: 9,
+ *   Dave: 6
+ * };
+ *
+ * const total = getScore(studentsScores);
+ * console.log(total);  // 30
+ *
+ */
+export const getScore = (students) => {
+  let totalScore = 0;
+
+  for (let student in students) {
+    const score = students[student];
+    if (typeof score === "number" && score >= 1 && score <= 10) {
+      totalScore += score;
+    } else {
+      console.error(
+        `Invalid score for student ${student}. Scores must be integers between 1 and 10.`,
+      );
+    }
+  }
+
+  return totalScore;
+};
