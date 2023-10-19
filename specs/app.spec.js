@@ -2,6 +2,7 @@
 // eslint-disable-next-line no-unused-vars
 import { nameIsValid, fullTrim, getTotal } from "../src/app.js";
 
+//tests
 describe("function 1", () => {
   test("is defined", () => {
     expect(nameIsValid).toBeDefined();
