@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest jest --setupFiles dotenv/config",
     "lint": "eslint . --ignore-path .gitignore --cache",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -31,5 +31,8 @@
     "jest": "^29.7.0",
     "prettier": "3.0.3",
     "prettier-eslint": "^15.0.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
   }
 }
