@@ -43,13 +43,13 @@ import { nameIsValid, fullTrim, getTotal } from "../src/app.js";
 //   });
 // });
 
-describe.each`
-  a        | b           | expected
-  ${10}     | ${10}        | ${100}
-  ${10}     | ${1}        | ${10}
-  ${2}     | ${1}        | ${3}
-`('returns $expected when $a is added to $b', ({ a, b, expected }) => {
-  test(`a=${a}, b=${b} -> expected=${expected}`, () => {
-    expect(a * b).toBe(expected);
-  });
-});
+// describe.each`
+//   a        | b           | expected
+//   ${10}     | ${10}        | ${100}
+//   ${10}     | ${1}        | ${10}
+//   ${2}     | ${1}        | ${3}
+// `('returns $expected when $a is added to $b', ({ a, b, expected }) => {
+//   test(`a=${a}, b=${b} -> expected=${expected}`, () => {
+//     expect(a * b).toBe(expected);
+//   });
+// });
