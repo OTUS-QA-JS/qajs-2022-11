@@ -12,10 +12,8 @@ describe('nameIsValid', function () {
   it('is function', () => {
     expect(typeof nameIsValid).toBe('function')
   })
-  it('should return true if name is valid', () => {
-    expect(nameIsValid("Liza")).toBe(true)
-    expect(nameIsValid('asdasdasdadadsasd1233')).toBe(true)
-    expect(nameIsValid('Joe')).toBe(true)
+  test.each(["Liza", "asdasdasdadadsasd1233", "joe"])('should return true if name is valid', (name) => {
+    expect(nameIsValid(name)).toBe(true)
   });
 
   it('should return false if name is invalid', () => {
@@ -26,7 +24,6 @@ describe('nameIsValid', function () {
     expect(nameIsValid(null)).toBe(false)
   });
 })
-
 
 describe('fullTrim', function () {
   it('imports without error', function () {
@@ -48,5 +45,39 @@ describe('fullTrim', function () {
   it('should not change string without whitespaces', () => {
     expect(fullTrim('Teststring')).toBe('Teststring')
   });
-  
+
+})
+
+describe('getTotal', function () {
+  it('imports without error', function () {
+    expect(fullTrim).toBeTruthy()
   })
+  it('is function', () => {
+    expect(typeof getTotal).toBe('function')
+  })
+  it('throw an error if discount is NaN', () => {
+    const items = [
+      { price: 10, quantity: 2 },
+      { price: 20, quantity: 1 },
+      { price: 5, quantity: 4 },
+    ];
+    expect(() => getTotal(items, '10')).toThrow('Скидка должна быть числом');
+    expect(() => getTotal(items, true)).toThrow('Скидка должна быть числом');
+    expect(() => getTotal(items, {})).toThrow('Скидка должна быть числом');
+  });
+
+  it('throw an error if negative discount', () => {
+    const items = [
+      { price: 10, quantity: 2 },
+      { price: 20, quantity: 1 },
+      { price: 5, quantity: 4 },
+    ];
+
+    expect(() => getTotal(items, -10)).toThrow(
+
+    );
+    expect(() => getTotal(items, -0.1)).toThrow(
+
+    );
+  });
+});
