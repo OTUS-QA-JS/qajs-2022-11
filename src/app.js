@@ -5,7 +5,7 @@
  */
 
 export const nameIsValid = (name) =>
-  !!name && name.length >= 2 && !name.includes(" ");
+  !!name && name.length >= 2 && /^[a-z]+$/.test(name);
 
 /**
  * Удаление пробелов из строки
