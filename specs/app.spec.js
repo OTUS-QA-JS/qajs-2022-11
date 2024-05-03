@@ -51,13 +51,45 @@ describe("Проверка", () => {
   test("Подсчёт суммы заказа два параметра массива и скидка", () => {
     expect(getTotal([{ price: 10, quantity: 10 }], 99)).toBe(1);
   });
+  test("Скидка должна быть числом", () => {
+    function checker() {
+      expect(getTotal([], "number"));
+    }
+    expect(checker).toThrow();
+  });
+  test("Процент скидки не может быть отрицательным", () => {
+    function checker() {
+      expect(getTotal(-1));
+    }
+    expect(checker).toThrow();
+  });
+  test("Процент скидки не может быть больше 100", () => {
+    function checker() {
+      expect(getTotal(0));
+    }
+    expect(checker).toThrow();
+  });
 });
 
 // console.log(fullTrim("test 1"));
 
-// describe("Проверка строки", () => {
-//   test("mentions grapefruit", () => {
-//     expect(nameIsValid()).toMatch(/grapefruit/);
-//     expect(nameIsValid()).toMatch(new RegExp("grapefruit"));
+// describe("Paranetric getTotal", () => {
+//   test.each([
+//     [10, 10, 100],
+//     [10, 1, 10],
+//     [{ 10, 1 }, { 10, 9 }, 100],
+//   ])("price: %i, quantity: %i, expected: %i", (a, b, expected) => {
+//     expect(getTotal([{ price: a, quantity: b }])).toBe(expected);
 //   });
+// });
+
+// test("функция бросает исключение при вызове", () => {
+//   expect(() => {
+//     getTotal.discount(5.4);
+//   }).toThrow();
+// });
+// test("процент скидки не может быть отрицательным -5", () => {
+//   expect(() => {
+//     getTotal(-5);
+//   }).toThrow();
 // });
