@@ -97,14 +97,3 @@ describe("Paranetric getTotal", () => {
 //     expect(getTotal([{ price: a, quantity: b }])).toBe(expected);
 //   });
 // });
-
-// test("функция бросает исключение при вызове", () => {
-//   expect(() => {
-//     getTotal.discount(5.4);
-//   }).toThrow();
-// });
-// test("процент скидки не может быть отрицательным -5", () => {
-//   expect(() => {
-//     getTotal(-5);
-//   }).toThrow();
-// });
