@@ -52,23 +52,38 @@ describe("Проверка", () => {
     expect(getTotal([{ price: 10, quantity: 10 }], 99)).toBe(1);
   });
   test("Скидка должна быть числом", () => {
-    function checker() {
-      expect(getTotal([], "number"));
-    }
-    expect(checker).toThrow();
+    expect(() => {
+      getTotal.discount(Number);
+    }).toThrow();
   });
   test("Процент скидки не может быть отрицательным", () => {
-    function checker() {
-      expect(getTotal(-1));
-    }
-    expect(checker).toThrow();
+    expect(() => {
+      getTotal.discount(-5);
+    }).toThrow();
   });
   test("Процент скидки не может быть больше 100", () => {
-    function checker() {
-      expect(getTotal(0));
-    }
-    expect(checker).toThrow();
+    expect(() => {
+      getTotal.discount(1000);
+    }).toThrow();
   });
+});
+
+// console.log(fullTrim("test 1"));
+
+describe("Paranetric getTotal", () => {
+  test.each([
+    [10, 10, , 100],
+    [10, 1, , 10],
+    [[10, 1], [10, 9], , 100],
+    [[10, 0], [10, 9], , 90],
+    [10, 10, 90, 10],
+    [10, 10, 0, 100],
+  ])(
+    "price: %i, quantity: %i, expected: %i, discount: %i",
+    (a, b, c, expected) => {
+      expect(getTotal([{ price: a, quantity: b }], c)).toBe(expected);
+    },
+  );
 });
 
 // console.log(fullTrim("test 1"));
