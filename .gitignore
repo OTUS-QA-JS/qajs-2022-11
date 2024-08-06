@@ -1,4 +1,11 @@
 node_modules
 coverage
+.vscode
 .idea
 .eslintcache
+settings.json
+qajs-2022-11.code-workspace
+.env
+package-lock.json
+package.json
+!/framework/services/authController.js
